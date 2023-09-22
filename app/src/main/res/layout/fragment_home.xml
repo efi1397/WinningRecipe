@@ -1,0 +1,168 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:background="#f2f2f2"
+    tools:context=".Home">
+
+    <androidx.appcompat.widget.SearchView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="16dp"
+        android:layout_marginStart="12dp"
+        android:layout_marginEnd="12dp"
+        android:id="@+id/search"
+        app:iconifiedByDefault="false"
+        app:searchHintIcon="@null"
+        app:queryHint="Search..."
+        android:focusable="false"
+        android:background="@drawable/app_border"
+        app:closeIcon="@drawable/baseline_clear_24"
+        app:searchIcon="@drawable/baseline_search_24"/>
+
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical"
+        android:id="@+id/scrollView"
+        android:layout_below="@id/search">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="15dp"
+            android:orientation="vertical">
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:id="@+id/start_categor_1"
+                android:layout_marginTop="15dp"
+                android:orientation="vertical">
+
+                <TextView
+                    android:layout_width="250dp"
+                    android:layout_height="60dp"
+                    android:id="@+id/categor_1"
+                    android:text="categor 1"
+                    android:textSize="30sp"
+                    android:textStyle="italic"/>
+
+                <androidx.recyclerview.widget.RecyclerView
+                    android:layout_width="match_parent"
+                    android:layout_height="190dp"
+                    android:id="@+id/categor_1_recyclerView"
+                    android:orientation="horizontal"/>
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:id="@+id/start_categor_2"
+                android:layout_marginTop="15dp"
+                android:orientation="vertical">
+
+                <TextView
+                    android:layout_width="250dp"
+                    android:layout_height="60dp"
+                    android:id="@+id/categor_2"
+                    android:text="categor 2"
+                    android:textSize="30sp"
+                    android:textStyle="italic"/>
+
+                <androidx.recyclerview.widget.RecyclerView
+                    android:layout_width="match_parent"
+                    android:layout_height="190dp"
+                    android:id="@+id/categor_2_recyclerView"
+                    android:orientation="horizontal"/>
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:id="@+id/start_categor_3"
+                android:layout_marginTop="15dp"
+                android:orientation="vertical">
+
+                <TextView
+                    android:layout_width="250dp"
+                    android:layout_height="60dp"
+                    android:id="@+id/categor_3"
+                    android:text="categor 3"
+                    android:textSize="30sp"
+                    android:textStyle="italic"/>
+
+                <androidx.recyclerview.widget.RecyclerView
+                    android:layout_width="match_parent"
+                    android:layout_height="190dp"
+                    android:id="@+id/categor_3_recyclerView"
+                    android:orientation="horizontal"/>
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:id="@+id/start_categor_4"
+                android:layout_marginTop="15dp"
+                android:orientation="vertical">
+
+                <TextView
+                    android:layout_width="250dp"
+                    android:layout_height="60dp"
+                    android:id="@+id/categor_4"
+                    android:text="categor 4"
+                    android:textSize="30sp"
+                    android:textStyle="italic"/>
+
+                <androidx.recyclerview.widget.RecyclerView
+                    android:layout_width="match_parent"
+                    android:layout_height="190dp"
+                    android:id="@+id/categor_4_recyclerView"
+                    android:orientation="horizontal"/>
+            </LinearLayout>
+
+        </LinearLayout>
+
+
+    </ScrollView>
+
+    <com.github.clans.fab.FloatingActionMenu
+        android:id="@+id/menuButton"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginEnd="20dp"
+        android:layout_marginBottom="20dp"
+        app:menu_fab_size="normal"
+        app:menu_colorPressed="@color/appColor"
+        app:menu_colorNormal="@color/appColor"
+        app:menu_icon="@drawable/baseline_format_list_bulleted_24"
+        app:menu_openDirection="up"
+        app:menu_showShadow="true"
+        android:layout_alignEnd="@+id/scrollView"
+        android:layout_alignBottom="@+id/scrollView">
+
+        <com.github.clans.fab.FloatingActionButton
+            android:id="@+id/favoriteBtn"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:minHeight="48dp"
+            app:fab_colorNormal="@color/appColor"
+            app:fab_colorPressed="@color/appColor"
+            android:src="@drawable/baseline_wiht_favorite_border_24"
+            app:fab_size="mini"/>
+
+        <com.github.clans.fab.FloatingActionButton
+            android:id="@+id/addFirebaseMoviesBtn"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:minHeight="48dp"
+            app:fab_colorNormal="@color/appColor"
+            app:fab_colorPressed="@color/appColor"
+            android:src="@drawable/add_24"
+            app:fab_size="mini"/>
+
+    </com.github.clans.fab.FloatingActionMenu>
+
+</RelativeLayout>
