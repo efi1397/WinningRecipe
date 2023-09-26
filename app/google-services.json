@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "921751530636",
+    "project_id": "winningrecipe-5f0f1",
+    "storage_bucket": "winningrecipe-5f0f1.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:921751530636:android:ea793d8e13a7f861ab5fa9",
+        "android_client_info": {
+          "package_name": "com.example.winningrecipe"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBSn5cgrc5z6z4MGx36lSYQwj7OtBCpF30"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
