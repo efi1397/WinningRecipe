@@ -137,7 +137,7 @@
         app:menu_fab_size="normal"
         app:menu_colorPressed="@color/appColor"
         app:menu_colorNormal="@color/appColor"
-        app:menu_icon="@drawable/baseline_format_list_bulleted_24"
+        app:menu_icon="@drawable/baseline_format_list_bullet_24"
         app:menu_openDirection="up"
         app:menu_showShadow="true"
         android:layout_alignEnd="@+id/scrollView"
@@ -150,7 +150,7 @@
             android:minHeight="48dp"
             app:fab_colorNormal="@color/appColor"
             app:fab_colorPressed="@color/appColor"
-            android:src="@drawable/baseline_wiht_favorite_border_24"
+            android:src="@drawable/baseline_white_favorite_border_24"
             app:fab_size="mini"/>
 
         <com.github.clans.fab.FloatingActionButton
