@@ -33,6 +33,12 @@ public class Recipe {
         }
 
         // If all data is valid, initialize the object
+        this.name = name;
+        this.ingredients = ingredients;
+        this.image = image;
+        this.category = category;
+        this.preparationTime = preparationTime;
+        this.description = description;
     }
 
     // Getters and setters for all fields

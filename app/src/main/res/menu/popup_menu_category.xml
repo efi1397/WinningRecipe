@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android">
+    <item
+        android:id="@+id/chicken"
+        android:title="Chicken" />
+
+    <item
+        android:id="@+id/beef"
+        android:title="Beef" />
+
+    <item
+        android:id="@+id/vegetarian"
+        android:title="vegetarianegetarian" />
+
+    <item
+        android:id="@+id/dessert"
+        android:title="Dessert" />
+
+    <item
+        android:id="@+id/kosher"
+        android:title="Kosher" />
+
+    <item
+        android:id="@+id/soups"
+        android:title="Soups" />
+
+    <item
+        android:id="@+id/salad"
+        android:title="Salad" />
+
+    <item
+        android:id="@+id/italian"
+        android:title="Italian" />
+
+    <item
+        android:id="@+id/chinese"
+        android:title="Chinese" />
+    <item
+        android:id="@+id/indian"
+        android:title="Indian " />
+</menu>
