@@ -8,13 +8,14 @@ public class Recipe {
     private String category;
     private int preparationTime;
     private String description;
+    private String imageUrl;
 
 
     public Recipe() {
         // Default constructor required for Firebase
     }
 
-    public Recipe(String name, List<String> ingredients, String category, int preparationTime, String description) {
+    public Recipe(String name, List<String> ingredients, String category, int preparationTime, String description, String imageUrl) {
         if (!isValidName(name)) {
             throw new IllegalArgumentException("Invalid name for Recipe");
         }
@@ -37,6 +38,7 @@ public class Recipe {
         this.category = category;
         this.preparationTime = preparationTime;
         this.description = description;
+        this.imageUrl = imageUrl;
     }
 
     // Getters and setters for all fields
@@ -97,6 +99,14 @@ public class Recipe {
         } else {
             throw new IllegalArgumentException("Invalid description for Recipe");
         }
+    }
+
+    public String getImageUrl() {
+        return imageUrl;
+    }
+
+    public void setImageUrl(String imageUrl) {
+        this.imageUrl = imageUrl;
     }
 
     // Validation methods for individual fields

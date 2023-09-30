@@ -1,8 +1,8 @@
 package Utils;
 
-import android.app.AlertDialog;
-import android.net.Uri;
+import android.app.Activity;
 import android.util.Log;
+import android.widget.ImageView;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
@@ -10,41 +10,71 @@ import androidx.annotation.NonNull;
 import com.example.winningrecipe.R;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
-import com.google.android.gms.tasks.Task;
+import com.google.android.material.textfield.TextInputEditText;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
-import com.google.firebase.storage.FirebaseStorage;
-import com.google.firebase.storage.StorageReference;
-import com.google.firebase.storage.UploadTask;
 
 public class FirebaseHandler {
     private final DatabaseReference databaseReference;
-    private final StorageReference storageReference;
     public FirebaseHandler() {
         // Initialize Firebase database reference
         this.databaseReference = FirebaseDatabase.getInstance().getReference();
-        this.storageReference = FirebaseStorage.getInstance().getReference().child("Android Images");
     }
 
-    // Inside the addRecipe method of FirebaseHandler.java
-    public void addRecipe(String category, String recipeId, Recipe recipe) {
+    public void addRecipe(String category, String recipeId, Recipe recipe, Activity activity) {
         // Assuming "categories" is the top-level node in Firebase
         DatabaseReference categoryRef = databaseReference.child("categories").child(category);
-        Log.d("FirebaseHandler", "Trying add recipe.");
+        Log.d("FirebaseHandler", "Trying to add a recipe.");
         categoryRef.child(recipeId).setValue(recipe)
                 .addOnSuccessListener(new OnSuccessListener<Void>() {
                     @Override
                     public void onSuccess(Void aVoid) {
                         Log.d("FirebaseHandler", "Recipe added successfully.");
+
+                        // Reset fields in Upload Recipe form
+                        if (activity != null) {
+                            TextInputEditText uploadName = activity.findViewById(R.id.upload_name);
+                            TextInputEditText uploadIngredients = activity.findViewById(R.id.upload_ingredients);
+                            TextInputEditText uploadCategory = activity.findViewById(R.id.upload_category);
+                            TextInputEditText uploadTime = activity.findViewById(R.id.upload_time);
+                            TextInputEditText uploadDescription = activity.findViewById(R.id.upload_description);
+                            ImageView uploadImage = activity.findViewById(R.id.upload_image);
+
+                            if (uploadName != null) {
+                                uploadName.setText("");
+                            }
+                            if (uploadIngredients != null) {
+                                uploadIngredients.setText("");
+                            }
+                            if (uploadCategory != null) {
+                                uploadCategory.setText("");
+                            }
+                            if (uploadTime != null) {
+                                uploadTime.setText("");
+                            }
+                            if (uploadDescription != null) {
+                                uploadDescription.setText("");
+                            }
+                            if (uploadImage != null) {
+                                uploadImage.setImageResource(R.drawable.add_image);
+                            }
+                        }
+
+                        // Display a success message
+                        Toast.makeText(activity, "Recipe added successfully.", Toast.LENGTH_SHORT).show();
                     }
                 })
                 .addOnFailureListener(new OnFailureListener() {
                     @Override
                     public void onFailure(@NonNull Exception e) {
+                        // Display a failure message
+                        Toast.makeText(activity, "Write to DB failed.", Toast.LENGTH_SHORT).show();
+
                         Log.e("FirebaseHandler", "Failed to add recipe: " + e.getMessage());
                     }
                 });
     }
+
 
 
     public void removeRecipe(String category, String recipeId) {

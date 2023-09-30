@@ -40,7 +40,6 @@ public class AddRecipe extends Fragment {
     Button saveButton;
     Uri uri;
 
-
     @SuppressLint("MissingInflatedId")
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -55,16 +54,16 @@ public class AddRecipe extends Fragment {
         TextInputLayout textInputLayoutTime = viewF.findViewById(R.id.textInputLayoutTime);
         TextInputLayout textInputLayoutDescription = viewF.findViewById(R.id.textInputLayoutDescription);
 
-        uploadImage = viewF.findViewById(R.id.upload_image);
-
         uploadName = viewF.findViewById(R.id.upload_name);
         uploadIngredients = viewF.findViewById(R.id.upload_ingredients);
         uploadCategory = viewF.findViewById(R.id.upload_category);
         uploadTime = viewF.findViewById(R.id.upload_time);
         uploadDescription = viewF.findViewById(R.id.upload_description);
+        uploadImage = viewF.findViewById(R.id.upload_image);
 
         saveButton = viewF.findViewById(R.id.addRecipeToFirebase);
 
+        // list of categories
         uploadCategory.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -80,7 +79,6 @@ public class AddRecipe extends Fragment {
                     @Override
                     public boolean onMenuItemClick(MenuItem menuItem) {
                         uploadCategory.setText(menuItem.getTitle());
-//                        uploadCategory.setEnabled(false);
                         // Toast message on menu item clicked
                         return true;
                     }
@@ -90,6 +88,7 @@ public class AddRecipe extends Fragment {
             }
         });
 
+        // Upload image
         ActivityResultLauncher<Intent> activityResultLauncher = registerForActivityResult(
                 new ActivityResultContracts.StartActivityForResult(),
                 new ActivityResultCallback<ActivityResult>() {
@@ -107,8 +106,6 @@ public class AddRecipe extends Fragment {
         );
 
         uploadImage.setOnClickListener(new View.OnClickListener() {
-
-            // Intent cameraIntent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
             @Override
             public void onClick(View v) {
                 Intent photoPicker = new Intent(Intent.ACTION_PICK);
@@ -186,13 +183,21 @@ public class AddRecipe extends Fragment {
                     textInputLayoutDescription.setError(null); // Clear error message if valid
                 }
 
+                if (!(isValidName && isValidIngredients && isValidCategory && isValidTime && isValidDescription)) {
+                    Toast.makeText(getActivity(), "Please follow the instructions.", Toast.LENGTH_SHORT).show();
+                }
+
                 // If all fields are valid, create and add the recipe
                 if (isValidName && isValidIngredients && isValidCategory && isValidTime && isValidDescription) {
-                    // Create a new Recipe object
-                    Recipe recipe = new Recipe(name, ingredients, category, Integer.parseInt(timeText), description);
+                    // Convert the Uri to a String, upload image is optional
+                    String imageUrl = (uri != null) ? uri.toString() : "";
 
+                    // Create a new Recipe object
+                    Recipe recipe = new Recipe(name, ingredients, category, preparationTime, description, imageUrl);
+
+                    // Add recipe to DB
                     FirebaseHandler firebaseHandler = new FirebaseHandler();
-                    firebaseHandler.addRecipe(recipe.getCategory(), recipe.getName(), recipe);
+                    firebaseHandler.addRecipe(recipe.getCategory(), recipe.getName(), recipe, getActivity());
                 }
             }
         });
