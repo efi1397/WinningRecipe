@@ -1,7 +1,8 @@
-{
+	{
   "project_info": {
     "project_number": "921751530636",
     "project_id": "winningrecipe-5f0f1",
+	"firebase_url": "https://winningrecipe-5f0f1-default-rtdb.europe-west1.firebasedatabase.app",
     "storage_bucket": "winningrecipe-5f0f1.appspot.com"
   },
   "client": [

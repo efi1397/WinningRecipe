@@ -36,129 +36,130 @@
             android:layout_marginTop="10dp"/>
 
         <com.google.android.material.textfield.TextInputLayout
-            style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
-            android:layout_width="300dp"
-            android:layout_height="wrap_content"
-            android:layout_marginStart="10dp"
-            android:layout_marginTop="16dp"
-            android:layout_marginEnd="10dp"
-            android:hint="Recipe Name"
-            android:textColorHint="@color/appColor"
-            android:textColor="@color/appColor"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintHorizontal_bias="0.5"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/textView"
-            android:gravity="start|center_vertical">
+			android:id="@+id/textInputLayoutName"
+			style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
+			android:layout_width="300dp"
+			android:layout_height="wrap_content"
+			android:layout_marginStart="10dp"
+			android:layout_marginTop="16dp"
+			android:layout_marginEnd="10dp"
+			android:hint="Recipe Name"
+			android:textColorHint="@color/appColor"
+			android:textColor="@color/appColor"
+			app:errorEnabled="true">
 
-            <com.google.android.material.textfield.TextInputEditText
-                android:id="@+id/upload_name"
-                android:layout_width="match_parent"
-                android:layout_height="50dp"
-                android:inputType="text"
-                android:textColor="@color/appColor"/>
+			<com.google.android.material.textfield.TextInputEditText
+				android:id="@+id/upload_name"
+				android:layout_width="match_parent"
+				android:layout_height="50dp"
+				android:inputType="text"
+				android:textColor="@color/appColor" />
 
-        </com.google.android.material.textfield.TextInputLayout>
+		</com.google.android.material.textfield.TextInputLayout>
 
-        <com.google.android.material.textfield.TextInputLayout
-            style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
-            android:layout_width="300dp"
-            android:layout_height="wrap_content"
-            android:layout_marginStart="10dp"
-            android:layout_marginTop="16dp"
-            android:layout_marginEnd="10dp"
-            android:hint="Recipe Ingredients"
-            android:textColorHint="@color/appColor"
-            android:textColor="@color/appColor"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintHorizontal_bias="0.5"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/textView"
-            android:gravity="start|center_vertical">
+		<com.google.android.material.textfield.TextInputLayout
+			android:id="@+id/textInputLayoutIngredients"
+			style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
+			android:layout_width="300dp"
+			android:layout_height="wrap_content"
+			android:layout_marginStart="10dp"
+			android:layout_marginTop="16dp"
+			android:layout_marginEnd="10dp"
+			android:hint="Recipe Ingredients"
+			android:textColorHint="@color/appColor"
+			android:textColor="@color/appColor"
+			app:layout_constraintEnd_toEndOf="parent"
+			app:layout_constraintHorizontal_bias="0.5"
+			app:layout_constraintStart_toStartOf="parent"
+			app:layout_constraintTop_toBottomOf="@+id/textView"
+			android:gravity="start|center_vertical">
 
-            <com.google.android.material.textfield.TextInputEditText
-                android:id="@+id/upload_ingredients"
-                android:layout_width="match_parent"
-                android:layout_height="50dp"
-                android:inputType="text"
-                android:textColor="@color/appColor"/>
+			<com.google.android.material.textfield.TextInputEditText
+				android:id="@+id/upload_ingredients"
+				android:layout_width="match_parent"
+				android:layout_height="50dp"
+				android:inputType="text"
+				android:textColor="@color/appColor" />
 
-        </com.google.android.material.textfield.TextInputLayout>
+		</com.google.android.material.textfield.TextInputLayout>
 
-        <com.google.android.material.textfield.TextInputLayout
-            android:id="@+id/categoryTextInputLayout"
-            style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
-            android:layout_width="300dp"
-            android:layout_height="wrap_content"
-            android:layout_marginStart="10dp"
-            android:layout_marginTop="16dp"
-            android:layout_marginEnd="10dp"
-            android:hint="Recipe Category"
-            android:textColorHint="@color/appColor"
-            android:textColor="@color/appColor"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintHorizontal_bias="0.5"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/textView"
-            android:gravity="start|center_vertical">
 
-            <com.google.android.material.textfield.TextInputEditText
-                android:id="@+id/upload_category"
-                android:layout_width="match_parent"
-                android:layout_height="50dp"
-                android:inputType="text"
-                android:textColor="@color/appColor"/>
+		<com.google.android.material.textfield.TextInputLayout
+			android:id="@+id/textInputLayoutCategory"
+			style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
+			android:layout_width="300dp"
+			android:layout_height="wrap_content"
+			android:layout_marginStart="10dp"
+			android:layout_marginTop="16dp"
+			android:layout_marginEnd="10dp"
+			android:hint="Recipe Category"
+			android:textColorHint="@color/appColor"
+			android:textColor="@color/appColor"
+			app:layout_constraintEnd_toEndOf="parent"
+			app:layout_constraintHorizontal_bias="0.5"
+			app:layout_constraintStart_toStartOf="parent"
+			app:layout_constraintTop_toBottomOf="@+id/textView"
+			android:gravity="start|center_vertical">
 
-        </com.google.android.material.textfield.TextInputLayout>
+			<com.google.android.material.textfield.TextInputEditText
+				android:id="@+id/upload_category"
+				android:layout_width="match_parent"
+				android:layout_height="50dp"
+				android:inputType="text"
+				android:textColor="@color/appColor" />
 
-        <com.google.android.material.textfield.TextInputLayout
-            style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
-            android:layout_width="300dp"
-            android:layout_height="wrap_content"
-            android:layout_marginStart="10dp"
-            android:layout_marginTop="16dp"
-            android:layout_marginEnd="10dp"
-            android:hint="Preparation time"
-            android:textColorHint="@color/appColor"
-            android:textColor="@color/appColor"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintHorizontal_bias="0.5"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/textView"
-            android:gravity="start|center_vertical">
-
-            <com.google.android.material.textfield.TextInputEditText
-                android:id="@+id/upload_time"
-                android:layout_width="match_parent"
-                android:layout_height="50dp"
-                android:inputType="time"
-                android:textColor="@color/appColor"/>
-
-        </com.google.android.material.textfield.TextInputLayout>
+		</com.google.android.material.textfield.TextInputLayout>
 
         <com.google.android.material.textfield.TextInputLayout
-            style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
-            android:layout_width="300dp"
-            android:layout_height="wrap_content"
-            android:layout_marginStart="10dp"
-            android:layout_marginTop="16dp"
-            android:layout_marginEnd="10dp"
-            android:hint="Recipe Description"
-            android:textColorHint="@color/appColor"
-            android:textColor="@color/appColor"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintHorizontal_bias="0.5"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/textView"
-            android:gravity="start|center_vertical">
+			android:id="@+id/textInputLayoutTime"
+			style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
+			android:layout_width="300dp"
+			android:layout_height="wrap_content"
+			android:layout_marginStart="10dp"
+			android:layout_marginTop="16dp"
+			android:layout_marginEnd="10dp"
+			android:hint="Preparation time"
+			android:textColorHint="@color/appColor"
+			android:textColor="@color/appColor"
+			app:layout_constraintEnd_toEndOf="parent"
+			app:layout_constraintHorizontal_bias="0.5"
+			app:layout_constraintStart_toStartOf="parent"
+			app:layout_constraintTop_toBottomOf="@+id/textView"
+			android:gravity="start|center_vertical">
 
-            <com.google.android.material.textfield.TextInputEditText
-                android:id="@+id/upload_description"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:textColor="@color/appColor"/>
+			<com.google.android.material.textfield.TextInputEditText
+				android:id="@+id/upload_time"
+				android:layout_width="match_parent"
+				android:layout_height="50dp"
+				android:inputType="time"
+				android:textColor="@color/appColor" />
 
-        </com.google.android.material.textfield.TextInputLayout>
+		</com.google.android.material.textfield.TextInputLayout>
+
+		<com.google.android.material.textfield.TextInputLayout
+			android:id="@+id/textInputLayoutDescription"
+			style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
+			android:layout_width="300dp"
+			android:layout_height="wrap_content"
+			android:layout_marginStart="10dp"
+			android:layout_marginTop="16dp"
+			android:layout_marginEnd="10dp"
+			android:hint="Recipe Description"
+			android:textColorHint="@color/appColor"
+			android:textColor="@color/appColor"
+			app:layout_constraintEnd_toEndOf="parent"
+			app:layout_constraintHorizontal_bias="0.5"
+			app:layout_constraintStart_toStartOf="parent"
+			app:layout_constraintTop_toBottomOf="@+id/textView"
+			android:gravity="start|center_vertical">
+
+			<com.google.android.material.textfield.TextInputEditText
+				android:id="@+id/upload_description"
+				android:layout_width="match_parent"
+				android:layout_height="wrap_content"
+				android:textColor="@color/appColor" />
+
+		</com.google.android.material.textfield.TextInputLayout>
 
         <Button
             android:id="@+id/addRecipeToFirebase"

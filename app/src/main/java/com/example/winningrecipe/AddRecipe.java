@@ -1,5 +1,6 @@
 package com.example.winningrecipe;
 
+import android.annotation.SuppressLint;
 import android.app.Activity;
 import android.content.Intent;
 import android.net.Uri;
@@ -11,6 +12,7 @@ import androidx.activity.result.ActivityResultLauncher;
 import androidx.activity.result.contract.ActivityResultContracts;
 import androidx.fragment.app.Fragment;
 
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.MenuItem;
 import android.view.View;
@@ -21,8 +23,10 @@ import android.widget.PopupMenu;
 import android.widget.Toast;
 
 import com.google.android.material.textfield.TextInputEditText;
+import com.google.android.material.textfield.TextInputLayout;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 
 import Utils.FirebaseHandler;
@@ -37,11 +41,19 @@ public class AddRecipe extends Fragment {
     Uri uri;
 
 
+    @SuppressLint("MissingInflatedId")
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
         View viewF = inflater.inflate(R.layout.fragment_add_recipe, container, false);
+
+        // Add TextInputLayouts for error messages
+        TextInputLayout textInputLayoutName = viewF.findViewById(R.id.textInputLayoutName);
+        TextInputLayout textInputLayoutIngredients = viewF.findViewById(R.id.textInputLayoutIngredients);
+        TextInputLayout textInputLayoutCategory = viewF.findViewById(R.id.textInputLayoutCategory);
+        TextInputLayout textInputLayoutTime = viewF.findViewById(R.id.textInputLayoutTime);
+        TextInputLayout textInputLayoutDescription = viewF.findViewById(R.id.textInputLayoutDescription);
 
         uploadImage = viewF.findViewById(R.id.upload_image);
 
@@ -52,8 +64,6 @@ public class AddRecipe extends Fragment {
         uploadDescription = viewF.findViewById(R.id.upload_description);
 
         saveButton = viewF.findViewById(R.id.addRecipeToFirebase);
-
-//        uploadCategory.setEnabled(false);
 
         uploadCategory.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -107,16 +117,83 @@ public class AddRecipe extends Fragment {
             }
         });
 
+
         saveButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                // Retrieve input values from the EditText fields
+                String name = uploadName.getText().toString();
+                String ingredientsText = uploadIngredients.getText().toString();
+                String category = uploadCategory.getText().toString();
+                String timeText = uploadTime.getText().toString();
+                String description = uploadDescription.getText().toString();
 
-                List<String> listt = new ArrayList<>();
-                listt.add(uploadIngredients.getText().toString());
-                Recipe recipe = new Recipe(uploadName.getText().toString(), listt," ",uploadCategory.getText().toString(), Integer.parseInt(uploadTime.getText().toString()), uploadDescription.getText().toString());
+                List<String> ingredients;
+                // Check if the ingredientsText is empty or contains only spaces
+                if (ingredientsText.trim().isEmpty()) {
+                    ingredients = new ArrayList<>(); // Create an empty list
+                } else {
+                    // Split the ingredientsText using a comma as the delimiter
+                    ingredients = Arrays.asList(ingredientsText.split(","));
+                }
 
-                FirebaseHandler firebaseHandler = new FirebaseHandler();
-                firebaseHandler.addRecipe(recipe.getCategory(), recipe.getName(), recipe, uri);
+                String preparationTimeText = uploadTime.getText().toString();
+                int preparationTime;
+                // Check if the timeText is not empty
+                if (!preparationTimeText.trim().isEmpty()) {
+                    // Parse the timeText to an integer
+                    preparationTime = Integer.parseInt(timeText);
+                } else {
+                    // Handle the case where the time field is empty
+                    preparationTime = -1;
+                }
+
+                // Validate each input field
+                boolean isValidName = Recipe.isValidName(name);
+                boolean isValidIngredients = Recipe.isValidIngredients(ingredients);
+                boolean isValidCategory = Recipe.isValidCategory(category);
+                boolean isValidTime = Recipe.isValidPreparationTime(preparationTime);
+                boolean isValidDescription = Recipe.isValidDescription(description);
+
+                // Display validation errors (if any)
+                if (!isValidName) {
+                    textInputLayoutName.setError("Name is required.");
+                } else {
+                    textInputLayoutName.setError(null); // Clear error message if valid
+                }
+
+                if (!isValidIngredients) {
+                    textInputLayoutIngredients.setError("Ingredients are required.");
+                } else {
+                    textInputLayoutIngredients.setError(null); // Clear error message if valid
+                }
+
+                if (!isValidCategory) {
+                    textInputLayoutCategory.setError("Category is required.");
+                } else {
+                    textInputLayoutCategory.setError(null); // Clear error message if valid
+                }
+
+                if (!isValidTime || preparationTime < 0) {
+                    textInputLayoutTime.setError("Preparation time is required.");
+                } else {
+                    textInputLayoutTime.setError(null); // Clear error message if valid
+                }
+
+                if (!isValidDescription) {
+                    textInputLayoutDescription.setError("Description is required.");
+                } else {
+                    textInputLayoutDescription.setError(null); // Clear error message if valid
+                }
+
+                // If all fields are valid, create and add the recipe
+                if (isValidName && isValidIngredients && isValidCategory && isValidTime && isValidDescription) {
+                    // Create a new Recipe object
+                    Recipe recipe = new Recipe(name, ingredients, category, Integer.parseInt(timeText), description);
+
+                    FirebaseHandler firebaseHandler = new FirebaseHandler();
+                    firebaseHandler.addRecipe(recipe.getCategory(), recipe.getName(), recipe);
+                }
             }
         });
 

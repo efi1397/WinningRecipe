@@ -26,27 +26,26 @@ public class FirebaseHandler {
         this.storageReference = FirebaseStorage.getInstance().getReference().child("Android Images");
     }
 
-    public void addRecipe(String category, String recipeId, Recipe recipe, Uri uri) {
-
-        storageReference.child(uri.getLastPathSegment()).putFile(uri).addOnSuccessListener(new OnSuccessListener<UploadTask.TaskSnapshot>() {
-            @Override
-            public void onSuccess(UploadTask.TaskSnapshot taskSnapshot) {
-                Task<Uri> uriTask = taskSnapshot.getStorage().getDownloadUrl();
-                while (!uriTask.isComplete());
-                recipe.setImage(uriTask.getResult().toString());
-
-                // Assuming "categories" is the top-level node in Firebase
-                DatabaseReference categoryRef = databaseReference.child("categories").child(category);
-                categoryRef.child(recipeId).setValue(recipe);
-
-            }
-        }).addOnFailureListener(new OnFailureListener() {
-            @Override
-            public void onFailure(@NonNull Exception e) {
-                Log.d("error", e.getMessage());
-            }
-        });
+    // Inside the addRecipe method of FirebaseHandler.java
+    public void addRecipe(String category, String recipeId, Recipe recipe) {
+        // Assuming "categories" is the top-level node in Firebase
+        DatabaseReference categoryRef = databaseReference.child("categories").child(category);
+        Log.d("FirebaseHandler", "Trying add recipe.");
+        categoryRef.child(recipeId).setValue(recipe)
+                .addOnSuccessListener(new OnSuccessListener<Void>() {
+                    @Override
+                    public void onSuccess(Void aVoid) {
+                        Log.d("FirebaseHandler", "Recipe added successfully.");
+                    }
+                })
+                .addOnFailureListener(new OnFailureListener() {
+                    @Override
+                    public void onFailure(@NonNull Exception e) {
+                        Log.e("FirebaseHandler", "Failed to add recipe: " + e.getMessage());
+                    }
+                });
     }
+
 
     public void removeRecipe(String category, String recipeId) {
         // Assuming "categories" is the top-level node in Firebase

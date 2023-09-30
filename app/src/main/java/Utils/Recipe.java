@@ -8,14 +8,13 @@ public class Recipe {
     private String category;
     private int preparationTime;
     private String description;
-    private String image;
 
 
     public Recipe() {
         // Default constructor required for Firebase
     }
 
-    public Recipe(String name, List<String> ingredients, String image, String category, int preparationTime, String description) {
+    public Recipe(String name, List<String> ingredients, String category, int preparationTime, String description) {
         if (!isValidName(name)) {
             throw new IllegalArgumentException("Invalid name for Recipe");
         }
@@ -35,7 +34,6 @@ public class Recipe {
         // If all data is valid, initialize the object
         this.name = name;
         this.ingredients = ingredients;
-        this.image = image;
         this.category = category;
         this.preparationTime = preparationTime;
         this.description = description;
@@ -65,15 +63,6 @@ public class Recipe {
             throw new IllegalArgumentException("Invalid ingredients for Recipe");
         }
     }
-
-    public String getImage() {
-        return image;
-    }
-
-    public void setImage(String image) {
-        this.image = image;
-    }
-
     public String getCategory() {
         return category;
     }
@@ -111,23 +100,23 @@ public class Recipe {
     }
 
     // Validation methods for individual fields
-    private boolean isValidName(String name) {
+    public static boolean isValidName(String name) {
         return name != null && !name.isEmpty();
     }
 
-    private boolean isValidIngredients(List<String> ingredients) {
+    public static boolean isValidIngredients(List<String> ingredients) {
         return ingredients != null && !ingredients.isEmpty();
     }
 
-    private boolean isValidCategory(String category) {
+    public static boolean isValidCategory(String category) {
         return category != null && !category.isEmpty();
     }
 
-    private boolean isValidPreparationTime(int preparationTime) {
+    public static boolean isValidPreparationTime(int preparationTime) {
         return preparationTime >= 0; // Ensure non-negative preparation time
     }
 
-    private boolean isValidDescription(String description) {
+    public static boolean isValidDescription(String description) {
         return description != null && !description.isEmpty();
     }
 }
