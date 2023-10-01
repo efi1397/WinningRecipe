@@ -1,6 +1,9 @@
 package Utils;
+import com.example.winningrecipe.MainActivity;
+import com.example.winningrecipe.R.layout;
 
 import android.app.Activity;
+import android.content.Intent;
 import android.util.Log;
 import android.widget.ImageView;
 import android.widget.Toast;
@@ -62,6 +65,11 @@ public class FirebaseHandler {
 
                         // Display a success message
                         Toast.makeText(activity, "Recipe added successfully.", Toast.LENGTH_SHORT).show();
+
+                        // Move to MainActivity after complete
+                        Intent intent = new Intent(activity, MainActivity.class);
+                        activity.startActivity(intent);
+                        activity.finish(); // Close the current activity if needed
                     }
                 })
                 .addOnFailureListener(new OnFailureListener() {
