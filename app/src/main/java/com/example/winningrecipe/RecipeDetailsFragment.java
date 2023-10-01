@@ -1,64 +1,80 @@
 package com.example.winningrecipe;
 
+import android.content.Context;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 
+import androidx.activity.OnBackPressedCallback;
+import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
+import androidx.fragment.app.FragmentResultListener;
+import androidx.navigation.Navigation;
 
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageView;
+import android.widget.TextView;
 
-/**
- * A simple {@link Fragment} subclass.
- * Use the {@link RecipeDetailsFragment#newInstance} factory method to
- * create an instance of this fragment.
- */
+import com.bumptech.glide.Glide;
+import com.google.firebase.database.DatabaseReference;
+
+import Utils.FirebaseHandler;
+
 public class RecipeDetailsFragment extends Fragment {
 
-    // TODO: Rename parameter arguments, choose names that match
-    // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
-    private static final String ARG_PARAM1 = "param1";
-    private static final String ARG_PARAM2 = "param2";
+    ImageView single_recipe_image;
+    TextView recipe_name, recipe_category, recipe_preparation_time, recipe_ingredients, recipe_instructions;
+    DatabaseReference databaseReference;
+    String imageUrl = "";
 
-    // TODO: Rename and change types of parameters
-    private String mParam1;
-    private String mParam2;
-
-    public RecipeDetailsFragment() {
-        // Required empty public constructor
-    }
-
-    /**
-     * Use this factory method to create a new instance of
-     * this fragment using the provided parameters.
-     *
-     * @param param1 Parameter 1.
-     * @param param2 Parameter 2.
-     * @return A new instance of fragment RecipeDetailsFragment.
-     */
-    // TODO: Rename and change types and number of parameters
-    public static RecipeDetailsFragment newInstance(String param1, String param2) {
-        RecipeDetailsFragment fragment = new RecipeDetailsFragment();
-        Bundle args = new Bundle();
-        args.putString(ARG_PARAM1, param1);
-        args.putString(ARG_PARAM2, param2);
-        fragment.setArguments(args);
-        return fragment;
-    }
-
-    @Override
-    public void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-        if (getArguments() != null) {
-            mParam1 = getArguments().getString(ARG_PARAM1);
-            mParam2 = getArguments().getString(ARG_PARAM2);
-        }
-    }
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
-        return inflater.inflate(R.layout.fragment_recipe_details, container, false);
+        View viewF =  inflater.inflate(R.layout.fragment_recipe_details, container, false);
+
+        single_recipe_image = viewF.findViewById(R.id.single_recipe_image);
+
+        recipe_name = viewF.findViewById(R.id.recipe_name);
+        recipe_category = viewF.findViewById(R.id.recipe_category);
+        recipe_preparation_time = viewF.findViewById(R.id.recipe_preparation_time);
+        recipe_ingredients = viewF.findViewById(R.id.recipe_ingredients);
+        recipe_instructions = viewF.findViewById(R.id.recipe_instructions);
+
+        //SharedPreferences sharedPref = getActivity().getPreferences(Context.MODE_PRIVATE);
+
+        FirebaseHandler firebaseHandler = new FirebaseHandler();
+        databaseReference = firebaseHandler.getDatabaseReference().child("categories");
+
+        getParentFragmentManager().setFragmentResultListener("category", this, new FragmentResultListener() {
+            @Override
+            public void onFragmentResult(@NonNull String requestKey, @NonNull Bundle result) {
+
+                recipe_name.setText(result.getString("recipeName"));
+                recipe_category.setText(result.getString("recipeCategory"));
+                recipe_instructions.setText(result.getString("description"));
+                recipe_ingredients.setText(result.getString("ingredients"));
+                recipe_preparation_time.setText(result.getString("preparationTime"));
+
+                imageUrl = result.getString("imageUrl");
+                Glide.with(getContext()).load(imageUrl).into(single_recipe_image);
+
+
+            }
+        });
+
+        OnBackPressedCallback callback = new OnBackPressedCallback(true /* enabled by default */) {
+            @Override
+            public void handleOnBackPressed() {
+                // Handle the back button event
+                Log.d("result" , "yes");
+                Navigation.findNavController(viewF).navigate(R.id.action_recipeDetailsFragment_to_home);
+            }
+        };
+        requireActivity().getOnBackPressedDispatcher().addCallback(getActivity(), callback);
+        return viewF;
     }
 }

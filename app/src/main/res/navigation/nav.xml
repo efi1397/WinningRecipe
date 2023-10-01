@@ -13,10 +13,30 @@
         <action
             android:id="@+id/action_home4_to_addRecipe"
             app:destination="@id/addRecipe" />
+        <action
+            android:id="@+id/action_home_to_recipeDetailsFragment"
+            app:destination="@id/recipeDetailsFragment" />
+        <action
+            android:id="@+id/action_home_to_categoryRecipesFragment"
+            app:destination="@id/categoryRecipesFragment" />
     </fragment>
     <fragment
         android:id="@+id/addRecipe"
         android:name="com.example.winningrecipe.AddRecipe"
         android:label="fragment_add_recipe"
         tools:layout="@layout/fragment_add_recipe" />
+    <fragment
+        android:id="@+id/recipeDetailsFragment"
+        android:name="com.example.winningrecipe.RecipeDetailsFragment"
+        android:label="fragment_recipe_details"
+        tools:layout="@layout/fragment_recipe_details" >
+        <action
+            android:id="@+id/action_recipeDetailsFragment_to_home"
+            app:destination="@id/home" />
+    </fragment>
+    <fragment
+        android:id="@+id/categoryRecipesFragment"
+        android:name="com.example.winningrecipe.CategoryRecipesFragment"
+        android:label="fragment_category_recipes"
+        tools:layout="@layout/fragment_category_recipes" />
 </navigation>

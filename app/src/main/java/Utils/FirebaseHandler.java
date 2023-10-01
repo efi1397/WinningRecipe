@@ -31,6 +31,14 @@ public class FirebaseHandler {
     private final DatabaseReference databaseReference;
     private final StorageReference storageReference;
 
+    public DatabaseReference getDatabaseReference() {
+        return databaseReference;
+    }
+
+    public StorageReference getStorageReference() {
+        return storageReference;
+    }
+
     public FirebaseHandler() {
         // Initialize Firebase database reference
         this.databaseReference = FirebaseDatabase.getInstance().getReference();

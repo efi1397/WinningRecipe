@@ -34,28 +34,28 @@
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginStart="15dp"
             android:orientation="vertical">
 
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:id="@+id/start_categor_1"
+                android:id="@+id/start_category_1"
                 android:layout_marginTop="15dp"
                 android:orientation="vertical">
 
                 <TextView
                     android:layout_width="250dp"
                     android:layout_height="60dp"
-                    android:id="@+id/categor_1"
-                    android:text="categor 1"
+                    android:id="@+id/category_1"
+                    android:layout_marginStart="10dp"
+                    android:text="Italian"
                     android:textSize="30sp"
                     android:textStyle="italic"/>
 
                 <androidx.recyclerview.widget.RecyclerView
                     android:layout_width="match_parent"
                     android:layout_height="190dp"
-                    android:id="@+id/categor_1_recyclerView"
+                    android:id="@+id/category_1_recyclerView"
                     android:orientation="horizontal"/>
             </LinearLayout>
 
@@ -69,15 +69,16 @@
                 <TextView
                     android:layout_width="250dp"
                     android:layout_height="60dp"
-                    android:id="@+id/categor_2"
-                    android:text="categor 2"
+                    android:id="@+id/category_2"
+                    android:layout_marginStart="10dp"
+                    android:text="Chicken"
                     android:textSize="30sp"
                     android:textStyle="italic"/>
 
                 <androidx.recyclerview.widget.RecyclerView
                     android:layout_width="match_parent"
                     android:layout_height="190dp"
-                    android:id="@+id/categor_2_recyclerView"
+                    android:id="@+id/category_2_recyclerView"
                     android:orientation="horizontal"/>
             </LinearLayout>
 
@@ -91,15 +92,16 @@
                 <TextView
                     android:layout_width="250dp"
                     android:layout_height="60dp"
-                    android:id="@+id/categor_3"
-                    android:text="categor 3"
+                    android:id="@+id/category_3"
+                    android:layout_marginStart="10dp"
+                    android:text="Beef"
                     android:textSize="30sp"
                     android:textStyle="italic"/>
 
                 <androidx.recyclerview.widget.RecyclerView
                     android:layout_width="match_parent"
                     android:layout_height="190dp"
-                    android:id="@+id/categor_3_recyclerView"
+                    android:id="@+id/category_3_recyclerView"
                     android:orientation="horizontal"/>
             </LinearLayout>
 
@@ -113,15 +115,16 @@
                 <TextView
                     android:layout_width="250dp"
                     android:layout_height="60dp"
-                    android:id="@+id/categor_4"
-                    android:text="categor 4"
+                    android:id="@+id/category_4"
+                    android:layout_marginStart="10dp"
+                    android:text="category 4"
                     android:textSize="30sp"
                     android:textStyle="italic"/>
 
                 <androidx.recyclerview.widget.RecyclerView
                     android:layout_width="match_parent"
                     android:layout_height="190dp"
-                    android:id="@+id/categor_4_recyclerView"
+                    android:id="@+id/category_4_recyclerView"
                     android:orientation="horizontal"/>
             </LinearLayout>
 

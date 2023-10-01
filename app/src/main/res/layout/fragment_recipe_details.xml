@@ -17,16 +17,16 @@
             android:layout_width="match_parent"
             android:layout_height="match_parent">
 
-        <ImageView
-            android:id="@+id/single_recipe_image"
-            android:layout_width="match_parent"
-            android:layout_height="300dp"
-            android:scaleType="centerCrop"
-            android:src="@drawable/r"/>
+            <ImageView
+                android:id="@+id/single_recipe_image"
+                android:layout_width="match_parent"
+                android:layout_height="300dp"
+                android:scaleType="centerCrop"
+                android:src="@drawable/r" />
 
             <TextView
                 android:id="@+id/recipe_name"
-                android:layout_width="200dp"
+                android:layout_width="match_parent"
                 android:layout_height="35dp"
                 android:layout_alignStart="@+id/single_recipe_image"
                 android:layout_alignBottom="@+id/single_recipe_image"
