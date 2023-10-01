@@ -36,7 +36,6 @@ public class CategoryRecipesFragment extends Fragment {
     DatabaseReference databaseReference;
     String categoryString;
 
-
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
@@ -47,43 +46,34 @@ public class CategoryRecipesFragment extends Fragment {
         recyclerView = viewF.findViewById(R.id.category_recyclerView);
 
         dataList = new ArrayList<>();
-
-        myAdapter =new MyAdapter(getContext(),dataList, viewF, getParentFragmentManager());
-
-
+        myAdapter = new MyAdapter(getContext(), dataList, viewF, getParentFragmentManager());
 
         FirebaseHandler firebaseHandler = new FirebaseHandler();
-        databaseReference = firebaseHandler.getDatabaseReference().child("categories");
-
 
         getParentFragmentManager().setFragmentResultListener("category", this, new FragmentResultListener() {
             @Override
             public void onFragmentResult(@NonNull String requestKey, @NonNull Bundle result) {
                 categoryString = result.getString("category");
-                Log.d("spt_cat2",categoryString);
 
+                // Retrieve recipes for the specified category
+                firebaseHandler.getRecipesByCategory(categoryString, new ValueEventListener() {
+                    @Override
+                    public void onDataChange(@NonNull DataSnapshot snapshot) {
+                        dataList.clear();
+                        for (DataSnapshot itemSnapshot : snapshot.getChildren()) {
+                            Recipe dataClass = itemSnapshot.getValue(Recipe.class);
+                            dataList.add(dataClass);
+                        }
+                    }
+
+                    @Override
+                    public void onCancelled(@NonNull DatabaseError error) {
+                        Toast.makeText(getContext(), error.getMessage().toString(), Toast.LENGTH_SHORT).show();
+                    }
+                });
             }
         });
 
-        databaseReference.child(categoryString).addValueEventListener(new ValueEventListener() {
-            @Override
-            public void onDataChange(@NonNull DataSnapshot snapshot) {
-                dataList.clear();
-                for (DataSnapshot itemSnapshot: snapshot.getChildren()){
-                    //Log.d("movieInstance.value",itemSnapshot.toString());
-
-                    Recipe dataClass =itemSnapshot.getValue(Recipe.class);
-                    //dataClass.setKey(itemSnapshot.getKey());
-                    dataList.add(dataClass);
-                }
-                //dataList.notifyDataSetChanged();
-            }
-
-            @Override
-            public void onCancelled(@NonNull DatabaseError error) {
-                Toast.makeText(getContext(), error.getMessage().toString(), Toast.LENGTH_SHORT).show();
-            }
-        });
         return viewF;
     }
 }

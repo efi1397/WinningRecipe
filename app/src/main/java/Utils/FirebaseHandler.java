@@ -18,6 +18,7 @@ import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.material.textfield.TextInputEditText;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.ValueEventListener;
 import com.google.firebase.storage.FirebaseStorage;
 import com.google.firebase.storage.StorageReference;
 import com.google.firebase.storage.UploadTask;
@@ -199,9 +200,9 @@ public class FirebaseHandler {
         }
     }
 
-    public DatabaseReference getCategoryReference(String category) {
-        // Assuming "categories" is the top-level node in Firebase
-        return databaseReference.child("categories").child(category);
+    public void getRecipesByCategory(String category, ValueEventListener valueEventListener) {
+        DatabaseReference categoryRef = databaseReference.child("categories").child(category);
+        categoryRef.addValueEventListener(valueEventListener);
     }
 
     public void removeRecipe(String category, String recipeId) {
