@@ -9,6 +9,7 @@ public class Recipe {
     private int preparationTime;
     private String description;
     private String imageUrl;
+    private boolean isFavorite;
 
 
     public Recipe() {
@@ -39,6 +40,7 @@ public class Recipe {
         this.preparationTime = preparationTime;
         this.description = description;
         this.imageUrl = imageUrl;
+        this.isFavorite = false; // Can be changed in set function
     }
 
     // Getters and setters for all fields
@@ -107,6 +109,14 @@ public class Recipe {
 
     public void setImageUrl(String imageUrl) {
         this.imageUrl = imageUrl;
+    }
+
+    public boolean getIsFavorite() {
+        return isFavorite;
+    }
+
+    public void setIsFavorite(boolean isFavorite) {
+        this.isFavorite = isFavorite;
     }
 
     // Validation methods for individual fields
