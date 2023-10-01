@@ -1,67 +1,151 @@
 package Utils;
-import com.example.winningrecipe.MainActivity;
-import com.example.winningrecipe.R.layout;
 
 import android.app.Activity;
+import android.content.ContentResolver;
 import android.content.Intent;
+import android.net.Uri;
+import android.text.TextUtils;
 import android.util.Log;
 import android.widget.ImageView;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 
+import com.example.winningrecipe.MainActivity;
 import com.example.winningrecipe.R;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.material.textfield.TextInputEditText;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.storage.FirebaseStorage;
+import com.google.firebase.storage.StorageReference;
+import com.google.firebase.storage.UploadTask;
+
+import java.io.FileNotFoundException;
+import java.io.IOException;
+import java.io.InputStream;
+import java.util.UUID;
 
 public class FirebaseHandler {
     private final DatabaseReference databaseReference;
+    private final StorageReference storageReference;
+
     public FirebaseHandler() {
         // Initialize Firebase database reference
         this.databaseReference = FirebaseDatabase.getInstance().getReference();
+        // Initialize Firebase Storage reference with the specific bucket URL
+        this.storageReference = FirebaseStorage.getInstance().getReferenceFromUrl("gs://winningrecipe-5f0f1.appspot.com");
     }
 
     public void addRecipe(String category, String recipeId, Recipe recipe, Activity activity) {
-        // Assuming "categories" is the top-level node in Firebase
         DatabaseReference categoryRef = databaseReference.child("categories").child(category);
         Log.d("FirebaseHandler", "Trying to add a recipe.");
+
+        if (!TextUtils.isEmpty(recipe.getImageUrl())) {
+            uploadImageAndAddRecipe(categoryRef, category, recipeId, recipe, activity);
+        } else {
+            // If no image to upload, continue with adding the recipe to the database
+            addNewRecipe(categoryRef, category, recipeId, recipe, activity);
+        }
+    }
+    private void uploadImageAndAddRecipe(DatabaseReference categoryRef, String category, String recipeId, Recipe recipe, Activity activity) {
+        uploadImageToFirebaseStorage(recipe, activity, new OnImageUploadListener() {
+            @Override
+            public void onImageUploadSuccess(String imageUrl) {
+                if (imageUrl != null) {
+                    recipe.setImageUrl(imageUrl);
+                }
+                // Image upload finished, now add the recipe to the database
+                addNewRecipe(categoryRef, category, recipeId, recipe, activity);
+            }
+
+            @Override
+            public void onImageUploadFailure(Exception e) {
+                Log.e("FirebaseHandler", "Image upload failed: " + e.getMessage(), e);
+                // Add the recipe to the database without an image
+                addNewRecipe(categoryRef, category, recipeId, recipe, activity);
+            }
+        });
+    }
+
+    // Interface to handle callbacks for image upload, so imageUrl contains the updated URL
+    public interface OnImageUploadListener {
+        void onImageUploadSuccess(String imageUrl);
+
+        void onImageUploadFailure(Exception e);
+    }
+
+    private void uploadImageToFirebaseStorage(Recipe recipe, Activity activity, OnImageUploadListener listener) {
+        // Create a reference to the image file in Firebase Storage
+        String imagePath = "recipe_images/" + UUID.randomUUID().toString() + ".jpg";
+        StorageReference imageRef = storageReference.child(imagePath);
+
+        // Create a content resolver to get the input stream from the image URI
+        ContentResolver contentResolver = activity.getContentResolver();
+        try {
+            InputStream imageStream = contentResolver.openInputStream(Uri.parse(recipe.getImageUrl()));
+
+            if (imageStream != null) {
+                // Upload the image to Firebase Storage
+                UploadTask uploadTask = imageRef.putStream(imageStream);
+
+                // Register observers to listen for the upload process so imageUrl contains the updated URL
+                uploadTask.addOnSuccessListener(new OnSuccessListener<UploadTask.TaskSnapshot>() {
+                    @Override
+                    public void onSuccess(UploadTask.TaskSnapshot taskSnapshot) {
+                        // Image uploaded successfully
+                        Toast.makeText(activity, "Image uploaded successfully", Toast.LENGTH_SHORT).show();
+                        Log.d("Image", "Finish uploading image");
+
+                        // Get the HTTP URL of the uploaded image
+                        imageRef.getDownloadUrl().addOnSuccessListener(new OnSuccessListener<Uri>() {
+                            @Override
+                            public void onSuccess(Uri downloadUri) {
+                                if (downloadUri != null) {
+                                    // Set the HTTP URL in the Recipe object
+                                    Log.d("Image", "Finish uploading image");
+                                    listener.onImageUploadSuccess(downloadUri.toString());
+                                }
+                            }
+                        }).addOnFailureListener(new OnFailureListener() {
+                            @Override
+                            public void onFailure(@NonNull Exception e) {
+                                // Handle any errors in getting the download URL
+                                listener.onImageUploadFailure(e);
+                                Toast.makeText(activity, "Failed to get image URL", Toast.LENGTH_SHORT).show();
+                            }
+                        });
+                    }
+                }).addOnFailureListener(new OnFailureListener() {
+                    @Override
+                    public void onFailure(@NonNull Exception e) {
+                        // Handle any errors during the upload
+                        listener.onImageUploadFailure(e);
+                        Toast.makeText(activity, "Image upload failed: " + e.getMessage(), Toast.LENGTH_SHORT).show();
+                    }
+                });
+            } else {
+                // Handle the case where the image stream is null
+                listener.onImageUploadFailure(new IOException("Image stream is null"));
+                Toast.makeText(activity, "Image not found", Toast.LENGTH_SHORT).show();
+            }
+        } catch (FileNotFoundException e) {
+            // Handle the case where the image file cannot be found
+            listener.onImageUploadFailure(e);
+            Toast.makeText(activity, "Image not found", Toast.LENGTH_SHORT).show();
+        }
+    }
+
+    public void addNewRecipe(DatabaseReference categoryRef, String category, String recipeId, Recipe recipe, Activity activity) {
         categoryRef.child(recipeId).setValue(recipe)
                 .addOnSuccessListener(new OnSuccessListener<Void>() {
                     @Override
                     public void onSuccess(Void aVoid) {
-                        Log.d("FirebaseHandler", "Recipe added successfully.");
+                        Log.d("Firebase Handler", "Recipe added successfully.");
 
                         // Reset fields in Upload Recipe form
-                        if (activity != null) {
-                            TextInputEditText uploadName = activity.findViewById(R.id.upload_name);
-                            TextInputEditText uploadIngredients = activity.findViewById(R.id.upload_ingredients);
-                            TextInputEditText uploadCategory = activity.findViewById(R.id.upload_category);
-                            TextInputEditText uploadTime = activity.findViewById(R.id.upload_time);
-                            TextInputEditText uploadDescription = activity.findViewById(R.id.upload_description);
-                            ImageView uploadImage = activity.findViewById(R.id.upload_image);
-
-                            if (uploadName != null) {
-                                uploadName.setText("");
-                            }
-                            if (uploadIngredients != null) {
-                                uploadIngredients.setText("");
-                            }
-                            if (uploadCategory != null) {
-                                uploadCategory.setText("");
-                            }
-                            if (uploadTime != null) {
-                                uploadTime.setText("");
-                            }
-                            if (uploadDescription != null) {
-                                uploadDescription.setText("");
-                            }
-                            if (uploadImage != null) {
-                                uploadImage.setImageResource(R.drawable.add_image);
-                            }
-                        }
+                        resetUploadRecipeFields(activity);
 
                         // Display a success message
                         Toast.makeText(activity, "Recipe added successfully.", Toast.LENGTH_SHORT).show();
@@ -77,29 +161,76 @@ public class FirebaseHandler {
                     public void onFailure(@NonNull Exception e) {
                         // Display a failure message
                         Toast.makeText(activity, "Write to DB failed.", Toast.LENGTH_SHORT).show();
-
                         Log.e("FirebaseHandler", "Failed to add recipe: " + e.getMessage());
                     }
                 });
     }
 
+    private void resetUploadRecipeFields(Activity activity) {
+        TextInputEditText uploadName = activity.findViewById(R.id.upload_name);
+        TextInputEditText uploadIngredients = activity.findViewById(R.id.upload_ingredients);
+        TextInputEditText uploadCategory = activity.findViewById(R.id.upload_category);
+        TextInputEditText uploadTime = activity.findViewById(R.id.upload_time);
+        TextInputEditText uploadDescription = activity.findViewById(R.id.upload_description);
+        ImageView uploadImage = activity.findViewById(R.id.upload_image);
 
+        resetTextField(uploadName);
+        resetTextField(uploadIngredients);
+        resetTextField(uploadCategory);
+        resetTextField(uploadTime);
+        resetTextField(uploadDescription);
+
+        if (uploadImage != null) {
+            uploadImage.setImageResource(R.drawable.add_image);
+        }
+    }
+
+    private void resetTextField(TextInputEditText textField) {
+        if (textField != null) {
+            textField.setText("");
+        }
+    }
+
+    public DatabaseReference getCategoryReference(String category) {
+        // Assuming "categories" is the top-level node in Firebase
+        return databaseReference.child("categories").child(category);
+    }
 
     public void removeRecipe(String category, String recipeId) {
         // Assuming "categories" is the top-level node in Firebase
         DatabaseReference categoryRef = databaseReference.child("categories").child(category);
-        categoryRef.child(recipeId).removeValue();
+        categoryRef.child(recipeId).removeValue()
+                .addOnSuccessListener(new OnSuccessListener<Void>() {
+                    @Override
+                    public void onSuccess(Void aVoid) {
+                        Log.d("FirebaseHandler", "Recipe removed successfully.");
+                    }
+                })
+                .addOnFailureListener(new OnFailureListener() {
+                    @Override
+                    public void onFailure(@NonNull Exception e) {
+                        // Handle the failure to remove the recipe
+                        Log.e("FirebaseHandler", "Failed to remove recipe: " + e.getMessage());
+                    }
+                });
     }
 
     public void updateRecipe(String category, String recipeId, Recipe updatedRecipe) {
         // Assuming "categories" is the top-level node in Firebase
         DatabaseReference categoryRef = databaseReference.child("categories").child(category);
-        categoryRef.child(recipeId).setValue(updatedRecipe);
-    }
-
-    // Get a reference to a specific category in the database
-    public DatabaseReference getCategoryReference(String category) {
-        // Assuming "categories" is the top-level node in Firebase
-        return databaseReference.child("categories").child(category);
+        categoryRef.child(recipeId).setValue(updatedRecipe)
+                .addOnSuccessListener(new OnSuccessListener<Void>() {
+                    @Override
+                    public void onSuccess(Void aVoid) {
+                        Log.d("FirebaseHandler", "Recipe updated successfully.");
+                    }
+                })
+                .addOnFailureListener(new OnFailureListener() {
+                    @Override
+                    public void onFailure(@NonNull Exception e) {
+                        // Handle the failure to update the recipe
+                        Log.e("FirebaseHandler", "Failed to update recipe: " + e.getMessage());
+                    }
+                });
     }
 }
