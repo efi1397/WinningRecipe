@@ -40,7 +40,7 @@ public class Recipe {
         this.preparationTime = preparationTime;
         this.description = description;
         this.imageUrl = imageUrl;
-        this.isFavorite = false;
+        this.isFavorite = false; // Can be changed in set function
     }
 
     // Getters and setters for all fields
