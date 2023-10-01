@@ -49,7 +49,7 @@ public class RecipeDetailsFragment extends Fragment {
         FirebaseHandler firebaseHandler = new FirebaseHandler();
         databaseReference = firebaseHandler.getDatabaseReference().child("categories");
 
-        getParentFragmentManager().setFragmentResultListener("category", this, new FragmentResultListener() {
+        getParentFragmentManager().setFragmentResultListener("requestKey", this, new FragmentResultListener() {
             @Override
             public void onFragmentResult(@NonNull String requestKey, @NonNull Bundle result) {
 
