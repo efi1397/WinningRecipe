@@ -40,7 +40,7 @@ public class Home extends Fragment {
     DatabaseReference databaseReference;
     MyAdapter[] adapters;
     Recipe emptyRecipe;
-    String user = "Yaellevi";
+    String user;
 
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
@@ -52,67 +52,68 @@ public class Home extends Fragment {
                              Bundle savedInstanceState) {
         View viewF = inflater.inflate(R.layout.fragment_home, container, false);
 
-        addRecipeBtn = viewF.findViewById(R.id.addFirebaseMoviesBtn);
-
-        // Initialize arrays for category TextViews, RecyclerViews, data lists, and adapters
-        categoryTextViews = new TextView[CATEGORIES.length];
-        recyclerViews = new RecyclerView[CATEGORIES.length];
-        dataLists = new List[CATEGORIES.length];
-        adapters = new MyAdapter[CATEGORIES.length];
-
-        // Find and set up category TextViews and RecyclerViews
-        for (int i = 0; i < CATEGORIES.length; i++) {
-            categoryTextViews[i] = viewF.findViewById(getResources().getIdentifier("category_" + (i + 1), "id", requireContext().getPackageName()));
-            recyclerViews[i] = viewF.findViewById(getResources().getIdentifier("category_" + (i + 1) + "_recyclerView", "id", requireContext().getPackageName()));
-
-            // Set category text from the constant array
-            categoryTextViews[i].setText(CATEGORIES[i]);
-            final String category = CATEGORIES[i];
-
-            // Set click listener for each category TextView
-            categoryTextViews[i].setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View view) {
-                    Bundle args = new Bundle();
-                    args.putString("category", category);
-
-                    getParentFragmentManager().setFragmentResult("category", args);
-                    Navigation.findNavController(viewF).navigate(R.id.action_home_to_categoryRecipesFragment);
-                }
-            });
-
-            // Initialize data lists and adapters
-            dataLists[i] = new ArrayList<>();
-            adapters[i] = new MyAdapter(getContext(), dataLists[i], viewF, getParentFragmentManager());
-            recyclerViews[i].setLayoutManager(new GridLayoutManager(getContext(), 1, GridLayoutManager.HORIZONTAL, false));
-            recyclerViews[i].setAdapter(adapters[i]);
-        }
-
-        emptyRecipe = new Recipe("add recipe", Arrays.asList("Ingredient 1", "Ingredient 2", "Ingredient 3"), "d", 1, "g", "https://firebasestorage.googleapis.com/v0/b/winningrecipe-5f0f1.appspot.com/o/recipe_images%2F24eaea92-c9a2-492e-8f2e-d926c3a0958d.jpg?alt=media&token=0fd294b8-70ff-4401-8144-61db30693f03");
-
         getParentFragmentManager().setFragmentResultListener("email_requestKey", this, new FragmentResultListener() {
             @Override
             public void onFragmentResult(@NonNull String requestKey, @NonNull Bundle result) {
                 user = result.getString("email").replace(".", ",");
                 Toast.makeText(getContext(), user, Toast.LENGTH_SHORT).show();
-            }
-        });
 
-        // Initialize FirebaseHandler instance
-        FirebaseHandler firebaseHandler = new FirebaseHandler();
+                addRecipeBtn = viewF.findViewById(R.id.addFirebaseMoviesBtn);
 
-        // Get DatabaseReference for user's categories
-        databaseReference = firebaseHandler.getUserCategoriesReference(user);
+                // Initialize arrays for category TextViews, RecyclerViews, data lists, and adapters
+                categoryTextViews = new TextView[CATEGORIES.length];
+                recyclerViews = new RecyclerView[CATEGORIES.length];
+                dataLists = new List[CATEGORIES.length];
+                adapters = new MyAdapter[CATEGORIES.length];
 
-        // Initialize data lists and adapters for each category
-        for (String category : CATEGORIES) {
-            setupCategoryListener(firebaseHandler, user, category);
-        }
+                // Find and set up category TextViews and RecyclerViews
+                for (int i = 0; i < CATEGORIES.length; i++) {
+                    categoryTextViews[i] = viewF.findViewById(getResources().getIdentifier("category_" + (i + 1), "id", requireContext().getPackageName()));
+                    recyclerViews[i] = viewF.findViewById(getResources().getIdentifier("category_" + (i + 1) + "_recyclerView", "id", requireContext().getPackageName()));
 
-        addRecipeBtn.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                Navigation.findNavController(viewF).navigate(R.id.action_home4_to_addRecipe);
+                    // Set category text from the constant array
+                    categoryTextViews[i].setText(CATEGORIES[i]);
+                    final String category = CATEGORIES[i];
+
+                    // Set click listener for each category TextView
+                    categoryTextViews[i].setOnClickListener(new View.OnClickListener() {
+                        @Override
+                        public void onClick(View view) {
+                            Bundle args = new Bundle();
+                            args.putString("category", category);
+
+                            getParentFragmentManager().setFragmentResult("category", args);
+                            Navigation.findNavController(viewF).navigate(R.id.action_home_to_categoryRecipesFragment);
+                        }
+                    });
+
+                    // Initialize data lists and adapters
+                    dataLists[i] = new ArrayList<>();
+                    adapters[i] = new MyAdapter(getContext(), dataLists[i], viewF, getParentFragmentManager());
+                    recyclerViews[i].setLayoutManager(new GridLayoutManager(getContext(), 1, GridLayoutManager.HORIZONTAL, false));
+                    recyclerViews[i].setAdapter(adapters[i]);
+                }
+
+                emptyRecipe = new Recipe("add recipe", Arrays.asList("Ingredient 1", "Ingredient 2", "Ingredient 3"), "d", 1, "g", "https://firebasestorage.googleapis.com/v0/b/winningrecipe-5f0f1.appspot.com/o/recipe_images%2F24eaea92-c9a2-492e-8f2e-d926c3a0958d.jpg?alt=media&token=0fd294b8-70ff-4401-8144-61db30693f03");
+
+
+                // Initialize FirebaseHandler instance
+                FirebaseHandler firebaseHandler = new FirebaseHandler();
+
+                // Get DatabaseReference for user's categories
+                databaseReference = firebaseHandler.getUserCategoriesReference(user);
+
+                // Initialize data lists and adapters for each category
+                for (String category : CATEGORIES) {
+                    setupCategoryListener(firebaseHandler, user, category);
+                }
+
+                addRecipeBtn.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View view) {
+                        Navigation.findNavController(viewF).navigate(R.id.action_home4_to_addRecipe);
+                    }
+                });
             }
         });
 
