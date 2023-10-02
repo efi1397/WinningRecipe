@@ -1,9 +1,14 @@
 package com.example.winningrecipe;
 
 import android.os.Bundle;
+import android.text.TextUtils;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageView;
+import androidx.appcompat.widget.SearchView;
+
 import android.widget.TextView;
 import android.widget.Toast;
 import androidx.annotation.NonNull;
@@ -40,7 +45,7 @@ public class Home extends Fragment {
     DatabaseReference databaseReference;
     MyAdapter[] adapters;
     Recipe emptyRecipe;
-    String user;
+    String user;// = "y1234@gmail,com";
 
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
@@ -51,7 +56,6 @@ public class Home extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         View viewF = inflater.inflate(R.layout.fragment_home, container, false);
-
         getParentFragmentManager().setFragmentResultListener("email_requestKey", this, new FragmentResultListener() {
             @Override
             public void onFragmentResult(@NonNull String requestKey, @NonNull Bundle result) {

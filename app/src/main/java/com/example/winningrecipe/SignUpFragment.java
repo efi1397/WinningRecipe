@@ -19,6 +19,8 @@ import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
 
+import Utils.FirebaseHandler;
+
 public class SignUpFragment extends Fragment {
 
     private static final String ARG_PARAM1 = "param1";
@@ -71,7 +73,7 @@ public class SignUpFragment extends Fragment {
             public void onClick(View view) {
                 String user = signupEmail.getText().toString().trim();
                 String pass = signupPassword.getText().toString().trim();
-
+                FirebaseHandler firebaseHandler = new FirebaseHandler();
                 if (user.isEmpty()){
                     signupEmail.setError("Email cannot be empty");
                 }
@@ -83,6 +85,7 @@ public class SignUpFragment extends Fragment {
                         public void onComplete(@NonNull Task<AuthResult> task) {
                             if (task.isSuccessful()) {
                                 Toast.makeText(getContext(), "SignUp Successful", Toast.LENGTH_SHORT).show();
+                                firebaseHandler.createNewUser(user);
                                 Navigation.findNavController(viewF).navigate(R.id.action_signUpFragment_to_loginFragment);
                             } else {
                                 Toast.makeText(getContext(), "SignUp Failed" + task.getException().getMessage(), Toast.LENGTH_SHORT).show();

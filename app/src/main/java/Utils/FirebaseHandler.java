@@ -47,23 +47,19 @@ public class FirebaseHandler {
         this.storageReference = FirebaseStorage.getInstance().getReferenceFromUrl("gs://winningrecipe-5f0f1.appspot.com");
     }
 
-    // Add a method to create a new user node with categories and return the user's reference
-    public DatabaseReference createNewUser(String userId, String name, String email) {
-        DatabaseReference userRef = databaseReference.child("Users").child(userId);
+    public void createNewUser(String email) {
+        email = email.replace(".", ",");
+        DatabaseReference userRef = databaseReference.child("Users").child(email);
 
-        // Create UserInfo node under the user
-        DatabaseReference userInfoRef = userRef.child("UserInfo");
-        userInfoRef.child("Name").setValue(name);
-        userInfoRef.child("Email").setValue(email);
-
-        // Create Categories node under the user
+        // Create a "Categories" node under the user's email
         DatabaseReference categoriesRef = userRef.child("Categories");
+        categoriesRef.setValue(null); // Trigger a write operation to create the "Categories" node
 
-        // You can add default categories here if needed
-        // categoriesRef.child("Category1").setValue(true);
-
-        return userRef;
+        // Create a "UserInfo" node under the user's email
+        DatabaseReference userInfoRef = userRef.child("UserInfo");
+        userInfoRef.child("email").setValue(email); // You can set other user information here as well
     }
+
 
     public void addRecipe(String category, String recipeId, Recipe recipe, Activity activity) {
         DatabaseReference categoryRef = databaseReference.child("categories").child(category);

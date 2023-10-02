@@ -11,6 +11,7 @@ import androidx.activity.result.ActivityResultCallback;
 import androidx.activity.result.ActivityResultLauncher;
 import androidx.activity.result.contract.ActivityResultContracts;
 import androidx.fragment.app.Fragment;
+import androidx.navigation.Navigation;
 
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -39,6 +40,7 @@ public class AddRecipe extends Fragment {
     TextInputEditText uploadName, uploadIngredients, uploadCategory, uploadTime, uploadDescription;
     Button saveButton;
     Uri uri;
+    String user;
 
     @SuppressLint("MissingInflatedId")
     @Override
@@ -180,13 +182,12 @@ public class AddRecipe extends Fragment {
 
                     // Create a new Recipe object
                     Recipe recipe = new Recipe(name, ingredients, category, preparationTime, description, imageUrl);
-
-                    String userId = "Yaellevi";
+                    user = "y1234@gmail.com"; // change this tomorrow
+                    user = user.replace(".", ",");
 
                     // Add recipe to DB
                     FirebaseHandler firebaseHandler = new FirebaseHandler();
-                    firebaseHandler.addRecipeForCategory(userId, category, name, recipe, getActivity());
-                    //firebaseHandler.addRecipe(recipe.getCategory(), recipe.getName(), recipe, getActivity());
+                    firebaseHandler.addRecipeForCategory(user, category, name, recipe, getActivity());
                 }
             }
         });
