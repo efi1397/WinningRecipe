@@ -43,6 +43,7 @@ public class Home extends Fragment {
     SearchView searchView;
     MyAdapter adapter_1, adapter_2, adapter_3, adapter_4;
     Recipe EmptyRecipe;
+    String user;
 
 
     @Override
@@ -89,9 +90,10 @@ public class Home extends Fragment {
         recyclerView_4.setAdapter(adapter_4);
 
         EmptyRecipe = new Recipe("add rcipe", Arrays.asList("Ingredient 1", "Ingredient 2", "Ingredient 3"), "d", 1, "g", "https://firebasestorage.googleapis.com/v0/b/winningrecipe-5f0f1.appspot.com/o/recipe_images%2F24eaea92-c9a2-492e-8f2e-d926c3a0958d.jpg?alt=media&token=0fd294b8-70ff-4401-8144-61db30693f03");
+        user = "Yaellevi";
 
         FirebaseHandler firebaseHandler = new FirebaseHandler();
-        databaseReference = firebaseHandler.getDatabaseReference().child("categories");
+        databaseReference = firebaseHandler.getDatabaseReference().child("Users").child(user).child("Categories");
 
         databaseReference.child("Italian").addValueEventListener(new ValueEventListener() {
             @Override
@@ -105,6 +107,10 @@ public class Home extends Fragment {
                     dataList_1.add(dataClass);
                 }
                 adapter_1.notifyDataSetChanged();
+                if (dataList_1.isEmpty()){
+                    dataList_1.add(EmptyRecipe);
+                }
+                Log.d("data",dataList_1.toString());
             }
 
             @Override
@@ -125,6 +131,11 @@ public class Home extends Fragment {
                     dataList_2.add(dataClass);
                 }
                 adapter_2.notifyDataSetChanged();
+                if (dataList_2.isEmpty()){
+                    dataList_2.add(EmptyRecipe);
+                }
+                Log.d("data",dataList_2.toString());
+
             }
 
             @Override
@@ -149,6 +160,8 @@ public class Home extends Fragment {
                 if (dataList_3.isEmpty()){
                     dataList_3.add(EmptyRecipe);
                 }
+                Log.d("data",dataList_3.toString());
+
             }
 
             @Override
