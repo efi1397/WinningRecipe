@@ -50,11 +50,11 @@ public class MyAdapter extends RecyclerView.Adapter<MyViewHolder>{
     @Override
     public void onBindViewHolder(@NonNull MyViewHolder holder, int position) {
         Glide.with(context).load(dataList.get(position).getImageUrl()).into(holder.recipeImage);
+
         if (Objects.equals(dataList.get(position).getImageUrl(), addRecipeUrl)) {
             holder.recipeName.setText("");
         }else {
             holder.recipeName.setText(dataList.get(position).getName());
-
         }
 
         holder.recipeConstraintLayout.setOnClickListener(new View.OnClickListener() {
@@ -68,16 +68,13 @@ public class MyAdapter extends RecyclerView.Adapter<MyViewHolder>{
                     args.putString("imageUrl", dataList.get(holder.getAdapterPosition()).getImageUrl());
                     args.putString("ingredients", dataList.get(holder.getAdapterPosition()).getIngredients().toString());
                     args.putString("preparationTime", String.valueOf(dataList.get(holder.getAdapterPosition()).getPreparationTime()));
-
-
                     fragmentManager.setFragmentResult("requestKey", args);
+
                     Navigation.findNavController(viewF).navigate(R.id.action_home_to_recipeDetailsFragment);
                 } else {
                     Navigation.findNavController(viewF).navigate(R.id.action_home4_to_addRecipe);
 
                 }
-
-
 
             }
         });

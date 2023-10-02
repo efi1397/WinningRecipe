@@ -3,6 +3,7 @@ package com.example.winningrecipe;
 import android.os.Bundle;
 
 import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
 import androidx.appcompat.widget.SearchView;
 import androidx.fragment.app.Fragment;
 
@@ -14,6 +15,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 //import com.example.winningrecipe.databinding.FragmentHomeBinding;
+import androidx.fragment.app.FragmentResultListener;
 import androidx.navigation.Navigation;
 import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
@@ -45,6 +47,11 @@ public class Home extends Fragment {
     Recipe EmptyRecipe;
     String user;
 
+    @Override
+    public void onCreate(@Nullable Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+
+    }
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -89,11 +96,22 @@ public class Home extends Fragment {
         recyclerView_3.setAdapter(adapter_3);
         recyclerView_4.setAdapter(adapter_4);
 
-        EmptyRecipe = new Recipe("add rcipe", Arrays.asList("Ingredient 1", "Ingredient 2", "Ingredient 3"), "d", 1, "g", "https://firebasestorage.googleapis.com/v0/b/winningrecipe-5f0f1.appspot.com/o/recipe_images%2F24eaea92-c9a2-492e-8f2e-d926c3a0958d.jpg?alt=media&token=0fd294b8-70ff-4401-8144-61db30693f03");
-        user = "Yaellevi";
+        EmptyRecipe = new Recipe("add recipe", Arrays.asList("Ingredient 1", "Ingredient 2", "Ingredient 3"), "d", 1, "g", "https://firebasestorage.googleapis.com/v0/b/winningrecipe-5f0f1.appspot.com/o/recipe_images%2F24eaea92-c9a2-492e-8f2e-d926c3a0958d.jpg?alt=media&token=0fd294b8-70ff-4401-8144-61db30693f03");
+
+
+        getParentFragmentManager().setFragmentResultListener("email_requestKey", this, new FragmentResultListener() {
+                    @Override
+                    public void onFragmentResult(@NonNull String requestKey, @NonNull Bundle result) {
+                        user = result.getString("email").replace(".",",");
+                        Toast.makeText(getContext(), user , Toast.LENGTH_SHORT).show();
+
+                    }
+                });
+
+
 
         FirebaseHandler firebaseHandler = new FirebaseHandler();
-        databaseReference = firebaseHandler.getDatabaseReference().child("Users").child(user).child("Categories");
+        databaseReference = firebaseHandler.getDatabaseReference().child("Users").child("Yaellevi").child("Categories");
 
         databaseReference.child("Italian").addValueEventListener(new ValueEventListener() {
             @Override
