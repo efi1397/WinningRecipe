@@ -300,4 +300,13 @@ public class FirebaseHandler {
                     }
                 });
     }
+    // Method to get the DatabaseReference for a specific user's categories
+    public DatabaseReference getUserCategoriesReference(String userId) {
+        return getDatabaseReference().child("Users").child(userId).child("Categories");
+    }
+
+    // Method to get the DatabaseReference for a specific category
+    public DatabaseReference getCategoryReference(String userId, String category) {
+        return getUserCategoriesReference(userId).child(category);
+    }
 }

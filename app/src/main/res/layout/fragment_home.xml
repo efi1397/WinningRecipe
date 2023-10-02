@@ -37,9 +37,9 @@
             android:orientation="vertical">
 
             <LinearLayout
+                android:id="@+id/start_category_1"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:id="@+id/start_category_1"
                 android:layout_marginTop="15dp"
                 android:orientation="vertical">
 
@@ -48,7 +48,7 @@
                     android:layout_height="60dp"
                     android:id="@+id/category_1"
                     android:layout_marginStart="10dp"
-                    android:text="Italian"
+                    android:text="Category 1"
                     android:textSize="30sp"
                     android:textStyle="italic"/>
 
@@ -60,9 +60,9 @@
             </LinearLayout>
 
             <LinearLayout
+                android:id="@+id/start_category_2"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:id="@+id/start_categor_2"
                 android:layout_marginTop="15dp"
                 android:orientation="vertical">
 
@@ -71,7 +71,7 @@
                     android:layout_height="60dp"
                     android:id="@+id/category_2"
                     android:layout_marginStart="10dp"
-                    android:text="Chicken"
+                    android:text="Category 2"
                     android:textSize="30sp"
                     android:textStyle="italic"/>
 
@@ -83,9 +83,9 @@
             </LinearLayout>
 
             <LinearLayout
+                android:id="@+id/start_category_3"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:id="@+id/start_categor_3"
                 android:layout_marginTop="15dp"
                 android:orientation="vertical">
 
@@ -94,7 +94,7 @@
                     android:layout_height="60dp"
                     android:id="@+id/category_3"
                     android:layout_marginStart="10dp"
-                    android:text="Beef"
+                    android:text="Category 3"
                     android:textSize="30sp"
                     android:textStyle="italic"/>
 
@@ -106,9 +106,9 @@
             </LinearLayout>
 
             <LinearLayout
+                android:id="@+id/start_category_4"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:id="@+id/start_categor_4"
                 android:layout_marginTop="15dp"
                 android:orientation="vertical">
 
@@ -117,7 +117,7 @@
                     android:layout_height="60dp"
                     android:id="@+id/category_4"
                     android:layout_marginStart="10dp"
-                    android:text="category 4"
+                    android:text="Category 4"
                     android:textSize="30sp"
                     android:textStyle="italic"/>
 
@@ -128,9 +128,146 @@
                     android:orientation="horizontal"/>
             </LinearLayout>
 
+            <LinearLayout
+                android:id="@+id/start_category_5"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="15dp"
+                android:orientation="vertical">
+
+                <TextView
+                    android:layout_width="250dp"
+                    android:layout_height="60dp"
+                    android:id="@+id/category_5"
+                    android:layout_marginStart="10dp"
+                    android:text="Category 5"
+                    android:textSize="30sp"
+                    android:textStyle="italic"/>
+
+                <androidx.recyclerview.widget.RecyclerView
+                    android:layout_width="match_parent"
+                    android:layout_height="190dp"
+                    android:id="@+id/category_5_recyclerView"
+                    android:orientation="horizontal"/>
+            </LinearLayout>
+
+            <LinearLayout
+                android:id="@+id/start_category_6"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="15dp"
+                android:orientation="vertical">
+
+                <TextView
+                    android:layout_width="250dp"
+                    android:layout_height="60dp"
+                    android:id="@+id/category_6"
+                    android:layout_marginStart="10dp"
+                    android:text="Category 6"
+                    android:textSize="30sp"
+                    android:textStyle="italic"/>
+
+                <androidx.recyclerview.widget.RecyclerView
+                    android:layout_width="match_parent"
+                    android:layout_height="190dp"
+                    android:id="@+id/category_6_recyclerView"
+                    android:orientation="horizontal"/>
+            </LinearLayout>
+
+            <LinearLayout
+                android:id="@+id/start_category_7"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="15dp"
+                android:orientation="vertical">
+
+                <TextView
+                    android:layout_width="250dp"
+                    android:layout_height="60dp"
+                    android:id="@+id/category_7"
+                    android:layout_marginStart="10dp"
+                    android:text="Category 7"
+                    android:textSize="30sp"
+                    android:textStyle="italic"/>
+
+                <androidx.recyclerview.widget.RecyclerView
+                    android:layout_width="match_parent"
+                    android:layout_height="190dp"
+                    android:id="@+id/category_7_recyclerView"
+                    android:orientation="horizontal"/>
+            </LinearLayout>
+
+            <LinearLayout
+                android:id="@+id/start_category_8"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="15dp"
+                android:orientation="vertical">
+
+                <TextView
+                    android:layout_width="250dp"
+                    android:layout_height="60dp"
+                    android:id="@+id/category_8"
+                    android:layout_marginStart="10dp"
+                    android:text="Category 8"
+                    android:textSize="30sp"
+                    android:textStyle="italic"/>
+
+                <androidx.recyclerview.widget.RecyclerView
+                    android:layout_width="match_parent"
+                    android:layout_height="190dp"
+                    android:id="@+id/category_8_recyclerView"
+                    android:orientation="horizontal"/>
+            </LinearLayout>
+
+            <LinearLayout
+                android:id="@+id/start_category_9"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="15dp"
+                android:orientation="vertical">
+
+                <TextView
+                    android:layout_width="250dp"
+                    android:layout_height="60dp"
+                    android:id="@+id/category_9"
+                    android:layout_marginStart="10dp"
+                    android:text="Category 9"
+                    android:textSize="30sp"
+                    android:textStyle="italic"/>
+
+                <androidx.recyclerview.widget.RecyclerView
+                    android:layout_width="match_parent"
+                    android:layout_height="190dp"
+                    android:id="@+id/category_9_recyclerView"
+                    android:orientation="horizontal"/>
+            </LinearLayout>
+
+
+            <LinearLayout
+                android:id="@+id/start_category_10"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="15dp"
+                android:orientation="vertical">
+
+                <TextView
+                    android:layout_width="250dp"
+                    android:layout_height="60dp"
+                    android:id="@+id/category_10"
+                    android:layout_marginStart="10dp"
+                    android:text="Category 10"
+                    android:textSize="30sp"
+                    android:textStyle="italic"/>
+
+                <androidx.recyclerview.widget.RecyclerView
+                    android:layout_width="match_parent"
+                    android:layout_height="190dp"
+                    android:id="@+id/category_10_recyclerView"
+                    android:orientation="horizontal"/>
+            </LinearLayout>
+
         </LinearLayout>
-
-
     </ScrollView>
 
     <com.github.clans.fab.FloatingActionMenu
