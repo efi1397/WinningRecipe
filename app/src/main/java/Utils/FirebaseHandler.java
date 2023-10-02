@@ -47,6 +47,24 @@ public class FirebaseHandler {
         this.storageReference = FirebaseStorage.getInstance().getReferenceFromUrl("gs://winningrecipe-5f0f1.appspot.com");
     }
 
+    // Add a method to create a new user node with categories and return the user's reference
+    public DatabaseReference createNewUser(String userId, String name, String email) {
+        DatabaseReference userRef = databaseReference.child("Users").child(userId);
+
+        // Create UserInfo node under the user
+        DatabaseReference userInfoRef = userRef.child("UserInfo");
+        userInfoRef.child("Name").setValue(name);
+        userInfoRef.child("Email").setValue(email);
+
+        // Create Categories node under the user
+        DatabaseReference categoriesRef = userRef.child("Categories");
+
+        // You can add default categories here if needed
+        // categoriesRef.child("Category1").setValue(true);
+
+        return userRef;
+    }
+
     public void addRecipe(String category, String recipeId, Recipe recipe, Activity activity) {
         DatabaseReference categoryRef = databaseReference.child("categories").child(category);
         Log.d("FirebaseHandler", "Trying to add a recipe.");
@@ -173,6 +191,46 @@ public class FirebaseHandler {
                         Log.e("FirebaseHandler", "Failed to add recipe: " + e.getMessage());
                     }
                 });
+    }
+
+    // Add a method to add a category for a user
+    public void addCategoryForUser(String userId, String category) {
+        DatabaseReference userCategoriesRef = databaseReference.child("Users").child(userId).child("Categories");
+        userCategoriesRef.child(category).setValue(true);
+    }
+
+    // Add a method to remove a category for a user
+    public void removeCategoryForUser(String userId, String category) {
+        DatabaseReference userCategoriesRef = databaseReference.child("Users").child(userId).child("Categories");
+        userCategoriesRef.child(category).removeValue();
+    }
+
+    // Add a method to get all categories for a user
+    public void getCategoriesForUser(String userId, ValueEventListener valueEventListener) {
+        DatabaseReference userCategoriesRef = databaseReference.child("Users").child(userId).child("Categories");
+        userCategoriesRef.addValueEventListener(valueEventListener);
+    }
+
+    // Add a method to get recipes for a specific category under a user
+    public void getRecipesForCategory(String userId, String category, ValueEventListener valueEventListener) {
+        DatabaseReference categoryRef = databaseReference.child("Users").child(userId).child("Categories").child(category);
+        categoryRef.addValueEventListener(valueEventListener);
+    }
+
+    // Add a method to add a recipe for a specific category under a user
+    public void addRecipeForCategory(String userId, String category, String recipeId, Recipe recipe, Activity activity) {
+        DatabaseReference categoryRef = databaseReference.child("Users").child(userId).child("Categories").child(category);
+
+        if (!TextUtils.isEmpty(recipe.getImageUrl())) {
+            uploadImageAndAddRecipe(categoryRef, category, recipeId, recipe, activity);
+        } else {
+            addNewRecipe(categoryRef, category,recipeId, recipe, activity);
+        }
+    }
+
+    public void getRecipesForUserAndCategory(String userId, String category, ValueEventListener valueEventListener) {
+        DatabaseReference userRef = databaseReference.child("Users").child(userId).child("Categories").child(category);
+        userRef.addValueEventListener(valueEventListener);
     }
 
     private void resetUploadRecipeFields(Activity activity) {

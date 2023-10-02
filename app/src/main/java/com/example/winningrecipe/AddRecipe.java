@@ -195,9 +195,12 @@ public class AddRecipe extends Fragment {
                     // Create a new Recipe object
                     Recipe recipe = new Recipe(name, ingredients, category, preparationTime, description, imageUrl);
 
+                    String userId = "Yaellevi";
+
                     // Add recipe to DB
                     FirebaseHandler firebaseHandler = new FirebaseHandler();
-                    firebaseHandler.addRecipe(recipe.getCategory(), recipe.getName(), recipe, getActivity());
+                    firebaseHandler.addRecipeForCategory(userId, category, name, recipe, getActivity());
+                    //firebaseHandler.addRecipe(recipe.getCategory(), recipe.getName(), recipe, getActivity());
                 }
             }
         });
