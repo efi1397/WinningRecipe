@@ -10,7 +10,7 @@
 
     <item
         android:id="@+id/vegetarian"
-        android:title="vegetarianegetarian" />
+        android:title="Vegetarian" />
 
     <item
         android:id="@+id/dessert"
@@ -37,5 +37,5 @@
         android:title="Chinese" />
     <item
         android:id="@+id/indian"
-        android:title="Indian " />
+        android:title="Indian" />
 </menu>

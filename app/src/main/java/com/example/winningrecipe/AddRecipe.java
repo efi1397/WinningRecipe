@@ -63,28 +63,14 @@ public class AddRecipe extends Fragment {
 
         saveButton = viewF.findViewById(R.id.addRecipeToFirebase);
 
+        // Disable text input in the uploadCategory field
+        uploadCategory.setFocusable(false);
+
         // list of categories
         uploadCategory.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                uploadCategory.setEnabled(true);
-
-                // Initializing the popup menu and giving the reference as current context
-                PopupMenu popupMenu = new PopupMenu(viewF.getContext(), uploadCategory);
-
-                // Inflating popup menu from popup_menu.xml file
-                popupMenu.getMenuInflater().inflate(R.menu.popup_menu_category, popupMenu.getMenu());
-
-                popupMenu.setOnMenuItemClickListener(new PopupMenu.OnMenuItemClickListener() {
-                    @Override
-                    public boolean onMenuItemClick(MenuItem menuItem) {
-                        uploadCategory.setText(menuItem.getTitle());
-                        // Toast message on menu item clicked
-                        return true;
-                    }
-                });
-                // Showing the popup menu
-                popupMenu.show();
+                showCategoryPopupMenu(view);
             }
         });
 
@@ -206,5 +192,26 @@ public class AddRecipe extends Fragment {
         });
 
         return viewF;
+    }
+
+    // Show the category popup menu
+    private void showCategoryPopupMenu(View view) {
+        // Initializing the popup menu and giving the reference as current context
+        PopupMenu popupMenu = new PopupMenu(view.getContext(), view);
+
+        // Inflating popup menu from popup_menu_category.xml file
+        popupMenu.getMenuInflater().inflate(R.menu.popup_menu_category, popupMenu.getMenu());
+
+        popupMenu.setOnMenuItemClickListener(new PopupMenu.OnMenuItemClickListener() {
+            @Override
+            public boolean onMenuItemClick(MenuItem menuItem) {
+                uploadCategory.setText(menuItem.getTitle());
+                // Toast message on menu item clicked
+                return true;
+            }
+        });
+
+        // Showing the popup menu
+        popupMenu.show();
     }
 }
