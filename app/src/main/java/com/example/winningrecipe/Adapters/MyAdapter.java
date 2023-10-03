@@ -113,6 +113,16 @@ public class MyAdapter extends RecyclerView.Adapter<MyViewHolder>{
                 }
             }
         });
+        holder.editBtn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                // Toggle the isFavorite state of the corresponding Recipe object
+                Recipe recipe = dataList.get(position);
+                // Create here function that represent an edit form for the recipe and then use updateRecipe function
+                firebaseHandler.updateRecipe(user.replace(".",","),recipe.getCategory(),recipe);
+                Log.d("Remove recipe","Recipe changed successfully.");
+            }
+        });
     }
 
     @Override
@@ -126,6 +136,7 @@ public class MyAdapter extends RecyclerView.Adapter<MyViewHolder>{
 class MyViewHolder extends RecyclerView.ViewHolder{
 
     ImageButton deleteBtn;
+    ImageView editBtn;
     ImageView recipeImage;
     ImageButton favoriteBtn;
 
@@ -141,6 +152,6 @@ class MyViewHolder extends RecyclerView.ViewHolder{
         recipeConstraintLayout = itemView.findViewById(R.id.recipe_card);
         favoriteBtn = itemView.findViewById(R.id.favoriteBtn);
         deleteBtn = itemView.findViewById(R.id.deleteBtn);
-
+        editBtn = itemView.findViewById(R.id.editBtn);
     }
 }
