@@ -96,7 +96,7 @@ public class MyAdapter extends RecyclerView.Adapter<MyViewHolder>{
     @Override
     public int getItemCount() {return dataList.size();}
 
-    public void searchDataList(ArrayList<Recipe> searchList){
+    public void searchDataList(List<Recipe> searchList){
         dataList = searchList;
         notifyDataSetChanged();
     }

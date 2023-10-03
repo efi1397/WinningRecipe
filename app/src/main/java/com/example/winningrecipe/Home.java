@@ -45,6 +45,7 @@ public class Home extends Fragment {
     DatabaseReference databaseReference;
     MyAdapter[] adapters;
     Recipe emptyRecipe;
+    SearchView searchView;
     String user;// = "y1234@gmail,com";
 
     @Override
@@ -56,6 +57,9 @@ public class Home extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         View viewF = inflater.inflate(R.layout.fragment_home, container, false);
+
+        searchView = viewF.findViewById(R.id.search);
+        searchView.clearFocus();
         getParentFragmentManager().setFragmentResultListener("email_requestKey", this, new FragmentResultListener() {
             @Override
             public void onFragmentResult(@NonNull String requestKey, @NonNull Bundle result) {
@@ -121,6 +125,21 @@ public class Home extends Fragment {
             }
         });
 
+        searchView.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
+            @Override
+            public boolean onQueryTextSubmit(String query) {
+                return false;
+            }
+
+            @Override
+            public boolean onQueryTextChange(String newText) {
+                searchList(newText);
+                return true;
+            }
+        });
+
+
+
         return viewF;
     }
 
@@ -150,4 +169,28 @@ public class Home extends Fragment {
                 Toast.makeText(getContext(), error.getMessage().toString(), Toast.LENGTH_SHORT).show();
             }
         });
-    }}
+    }
+
+    public void searchList(String text) {
+        ArrayList<List<Recipe>> searchLists = new ArrayList<>();
+
+        // Create lists based on search
+        for (int i = 0; i < CATEGORIES.length; i++) {
+            List<Recipe> currentSearchList = new ArrayList<>();
+            if (!text.isEmpty()) {
+                for (Recipe recipe : dataLists[i]) {
+                    if (recipe.getName().toLowerCase().contains(text.toLowerCase())) {
+                        currentSearchList.add(recipe);
+                    }
+                }
+                if (currentSearchList.isEmpty()){
+                    currentSearchList.add(emptyRecipe);
+                }
+            } else {
+                currentSearchList.addAll(dataLists[i]);
+            }
+            searchLists.add(currentSearchList);
+            adapters[i].searchDataList(currentSearchList);
+        }
+    }
+}
