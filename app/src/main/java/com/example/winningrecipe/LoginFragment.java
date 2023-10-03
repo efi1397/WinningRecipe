@@ -55,10 +55,15 @@ public class LoginFragment extends Fragment {
                         @Override
                         public void onSuccess(AuthResult authResult) {
                             Toast.makeText(getContext(), "email: " + email, Toast.LENGTH_SHORT).show();
-
+                            // Bundle for user variable to Home page
                             Bundle result  = new Bundle();
                             result .putString("email", email);
                             getParentFragmentManager().setFragmentResult("email_requestKey", result );
+                            // Bundle for user variable to AddRecipe page
+                            Bundle result1  = new Bundle();
+                            result1 .putString("email", email);
+                            getParentFragmentManager().setFragmentResult("email_requestKey1", result1 );
+
 
                             Navigation.findNavController(viewF).navigate(R.id.action_loginFragment_to_home);
                             //ass args of email to Home page

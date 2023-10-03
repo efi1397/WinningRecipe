@@ -10,7 +10,9 @@ import androidx.activity.result.ActivityResult;
 import androidx.activity.result.ActivityResultCallback;
 import androidx.activity.result.ActivityResultLauncher;
 import androidx.activity.result.contract.ActivityResultContracts;
+import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
+import androidx.fragment.app.FragmentResultListener;
 import androidx.navigation.Navigation;
 
 import android.util.Log;
@@ -67,7 +69,13 @@ public class AddRecipe extends Fragment {
 
         // Disable text input in the uploadCategory field
         uploadCategory.setFocusable(false);
-
+        // Receive user's email from the Bundle
+        getParentFragmentManager().setFragmentResultListener("email_requestKey1", this, new FragmentResultListener() {
+            @Override
+            public void onFragmentResult(@NonNull String requestKey, @NonNull Bundle result) {
+                user = result.getString("email").replace(".", ",");
+            }
+        });
         // list of categories
         uploadCategory.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -182,8 +190,6 @@ public class AddRecipe extends Fragment {
 
                     // Create a new Recipe object
                     Recipe recipe = new Recipe(name, ingredients, category, preparationTime, description, imageUrl);
-                    user = "y1234@gmail.com"; // change this tomorrow
-                    user = user.replace(".", ",");
 
                     // Add recipe to DB
                     FirebaseHandler firebaseHandler = new FirebaseHandler();
