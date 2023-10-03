@@ -97,7 +97,7 @@ public class Home extends Fragment {
 
                     // Initialize data lists and adapters
                     dataLists[i] = new ArrayList<>();
-                    adapters[i] = new MyAdapter(getContext(), dataLists[i], viewF, getParentFragmentManager());
+                    adapters[i] = new MyAdapter(getContext(), dataLists[i], viewF, getParentFragmentManager(), user);
                     recyclerViews[i].setLayoutManager(new GridLayoutManager(getContext(), 1, GridLayoutManager.HORIZONTAL, false));
                     recyclerViews[i].setAdapter(adapters[i]);
                 }

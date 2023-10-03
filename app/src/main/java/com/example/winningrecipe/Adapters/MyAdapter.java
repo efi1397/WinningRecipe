@@ -23,6 +23,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
 
+import Utils.FirebaseHandler;
 import Utils.Recipe;
 
 public class MyAdapter extends RecyclerView.Adapter<MyViewHolder>{
@@ -34,11 +35,14 @@ public class MyAdapter extends RecyclerView.Adapter<MyViewHolder>{
     Boolean isFavorite = false;
     String addRecipeUrl = "https://firebasestorage.googleapis.com/v0/b/winningrecipe-5f0f1.appspot.com/o/recipe_images%2F24eaea92-c9a2-492e-8f2e-d926c3a0958d.jpg?alt=media&token=0fd294b8-70ff-4401-8144-61db30693f03";
 
-    public MyAdapter(Context context, List<Recipe> dataList, View viewF, FragmentManager fragmentManager) {
+    String user;
+
+    public MyAdapter(Context context, List<Recipe> dataList, View viewF, FragmentManager fragmentManager, String user) {
         this.context = context;
         this.dataList = dataList;
         this.viewF = viewF;
         this.fragmentManager = fragmentManager;
+        this.user = user;
     }
 
     @NonNull
@@ -77,17 +81,28 @@ public class MyAdapter extends RecyclerView.Adapter<MyViewHolder>{
                 }
 
             }
-        });
-
+        }
+        
+        );
+        // Set the favorite button state based on the recipe's isFavorite field
+        if (dataList.get(position).getIsFavorite()) {
+            holder.favoriteBtn.setImageResource(R.drawable.baseline_white_favorite_24);
+        } else {
+            holder.favoriteBtn.setImageResource(R.drawable.baseline_white_favorite_border_24);
+        }
+        FirebaseHandler firebaseHandler = new FirebaseHandler();
         holder.favoriteBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                if (!isFavorite){
+                // Toggle the isFavorite state of the corresponding Recipe object
+                Recipe recipe = dataList.get(position);
+                recipe.setIsFavorite(!recipe.getIsFavorite());
+                firebaseHandler.updateRecipe(user.replace(".",","),recipe.getCategory(),recipe);
+                // Update the favorite button state based on the updated isFavorite state
+                if (recipe.getIsFavorite()) {
                     holder.favoriteBtn.setImageResource(R.drawable.baseline_white_favorite_24);
-                    isFavorite =!isFavorite;
                 } else {
                     holder.favoriteBtn.setImageResource(R.drawable.baseline_white_favorite_border_24);
-                    isFavorite =!isFavorite;
                 }
             }
         });

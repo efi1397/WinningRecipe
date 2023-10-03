@@ -278,10 +278,9 @@ public class FirebaseHandler {
                 });
     }
 
-    public void updateRecipe(String category, String recipeId, Recipe updatedRecipe) {
-        // Assuming "categories" is the top-level node in Firebase
-        DatabaseReference categoryRef = databaseReference.child("categories").child(category);
-        categoryRef.child(recipeId).setValue(updatedRecipe)
+    public void updateRecipe(String user, String category, Recipe updatedRecipe) {
+        DatabaseReference databaseReference = FirebaseDatabase.getInstance().getReference("Users").child(user).child("Categories").child(category).child(updatedRecipe.getName());
+        databaseReference.setValue(updatedRecipe)
                 .addOnSuccessListener(new OnSuccessListener<Void>() {
                     @Override
                     public void onSuccess(Void aVoid) {
@@ -296,6 +295,7 @@ public class FirebaseHandler {
                     }
                 });
     }
+
     // Method to get the DatabaseReference for a specific user's categories
     public DatabaseReference getUserCategoriesReference(String userId) {
         return getDatabaseReference().child("Users").child(userId).child("Categories");

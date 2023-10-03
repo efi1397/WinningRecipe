@@ -35,10 +35,17 @@ public class CategoryRecipesFragment extends Fragment {
 
     DatabaseReference databaseReference;
     String categoryString;
-
+    String user;
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
+        // Receive user's email from the Bundle
+        getParentFragmentManager().setFragmentResultListener("email_requestKey2", this, new FragmentResultListener() {
+            @Override
+            public void onFragmentResult(@NonNull String requestKey, @NonNull Bundle result) {
+                user = result.getString("email").replace(".", ",");
+            }
+        });
         // Inflate the layout for this fragment
         View viewF = inflater.inflate(R.layout.fragment_category_recipes, container, false);
 
@@ -46,7 +53,7 @@ public class CategoryRecipesFragment extends Fragment {
         recyclerView = viewF.findViewById(R.id.category_recyclerView);
 
         dataList = new ArrayList<>();
-        myAdapter = new MyAdapter(getContext(), dataList, viewF, getParentFragmentManager());
+        myAdapter = new MyAdapter(getContext(), dataList, viewF, getParentFragmentManager(), user);
 
         FirebaseHandler firebaseHandler = new FirebaseHandler();
 
