@@ -2,12 +2,14 @@ package com.example.winningrecipe.Adapters;
 
 import android.content.Context;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.cardview.widget.CardView;
@@ -84,13 +86,18 @@ public class MyAdapter extends RecyclerView.Adapter<MyViewHolder>{
         }
         
         );
-        // Set the favorite button state based on the recipe's isFavorite field
-        if (dataList.get(position).getIsFavorite()) {
-            holder.favoriteBtn.setImageResource(R.drawable.baseline_white_favorite_24);
-        } else {
-            holder.favoriteBtn.setImageResource(R.drawable.baseline_white_favorite_border_24);
-        }
+
         FirebaseHandler firebaseHandler = new FirebaseHandler();
+
+        holder.deleteBtn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                // Toggle the isFavorite state of the corresponding Recipe object
+                Recipe recipe = dataList.get(position);
+                firebaseHandler.removeRecipe(user.replace(".",","),recipe.getCategory(),recipe.getName());
+                Log.d("Remove recipe","Recipe removed successfully.");
+            }
+        });
         holder.favoriteBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -118,6 +125,7 @@ public class MyAdapter extends RecyclerView.Adapter<MyViewHolder>{
 }
 class MyViewHolder extends RecyclerView.ViewHolder{
 
+    ImageButton deleteBtn;
     ImageView recipeImage;
     ImageButton favoriteBtn;
 
@@ -132,6 +140,7 @@ class MyViewHolder extends RecyclerView.ViewHolder{
         recipeName = itemView.findViewById(R.id.recipe_name);
         recipeConstraintLayout = itemView.findViewById(R.id.recipe_card);
         favoriteBtn = itemView.findViewById(R.id.favoriteBtn);
+        deleteBtn = itemView.findViewById(R.id.deleteBtn);
 
     }
 }

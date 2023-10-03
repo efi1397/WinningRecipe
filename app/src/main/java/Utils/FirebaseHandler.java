@@ -259,10 +259,10 @@ public class FirebaseHandler {
         categoryRef.addValueEventListener(valueEventListener);
     }
 
-    public void removeRecipe(String category, String recipeId) {
-        // Assuming "categories" is the top-level node in Firebase
-        DatabaseReference categoryRef = databaseReference.child("categories").child(category);
-        categoryRef.child(recipeId).removeValue()
+    public void removeRecipe(String user, String category, String recipeName) {
+        DatabaseReference databaseReference = FirebaseDatabase.getInstance().getReference("Users").child(user).child("Categories").child(category);
+
+        databaseReference.child(recipeName).removeValue()
                 .addOnSuccessListener(new OnSuccessListener<Void>() {
                     @Override
                     public void onSuccess(Void aVoid) {

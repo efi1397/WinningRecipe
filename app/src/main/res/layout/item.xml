@@ -29,17 +29,34 @@
                 android:scaleType="centerCrop"
                 android:src="@drawable/r" />
 
-            <ImageButton
-                android:id="@+id/favoriteBtn"
-                android:layout_width="20dp"
-                android:layout_height="20dp"
-                android:background="@drawable/button_border"
-                android:src="@drawable/baseline_white_favorite_border_24"
-                android:layout_alignEnd="@id/recipe_name"
-                android:layout_marginStart="105dp"
-                android:layout_marginTop="105dp" />
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent">
 
+                <ImageButton
+                    android:id="@+id/favoriteBtn"
+                    android:layout_width="20dp"
+                    android:layout_height="20dp"
+                    android:layout_alignParentEnd="true"
+                    android:layout_alignParentBottom="true"
+                    android:layout_marginEnd="5dp"
+                    android:layout_marginBottom="5dp"
+                    android:background="@drawable/button_border"
+                    android:src="@drawable/baseline_white_favorite_border_24" />
+
+                <ImageButton
+                    android:id="@+id/deleteBtn"
+                    android:layout_width="20dp"
+                    android:layout_height="20dp"
+                    android:layout_toStartOf="@id/favoriteBtn"
+                    android:layout_alignTop="@id/favoriteBtn"
+                    android:background="@drawable/button_border"
+                    android:src="@drawable/baseline_clear_24" />
+
+            </RelativeLayout>
         </androidx.cardview.widget.CardView>
+
+
 
         <TextView
             android:id="@+id/recipe_name"
