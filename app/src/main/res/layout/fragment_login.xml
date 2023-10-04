@@ -7,23 +7,24 @@
     android:layout_height="match_parent"
     android:orientation="vertical"
     android:gravity="center"
-    android:background="@drawable/pagebkg"
+    android:background="@drawable/pagebkg_login_signup"
     tools:context=".LoginFragment">
 
     <androidx.cardview.widget.CardView
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
+        android:layout_width="280dp"
+        android:layout_height="470dp"
         android:layout_margin="30dp"
+        app:cardBackgroundColor="#00000000"
         app:cardCornerRadius="30dp"
         app:cardElevation="20dp">
 
         <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
+            android:layout_width="259dp"
+            android:layout_height="528dp"
             android:orientation="vertical"
             android:layout_gravity="center_horizontal"
             android:padding="24dp"
-            android:background="@drawable/custom_edittext">
+            android:layout_marginTop="30dp">
 
             <TextView
                 android:layout_width="match_parent"
@@ -36,11 +37,12 @@
                 android:textColor="@color/appColor"/>
 
             <EditText
-                android:layout_width="match_parent"
+                android:layout_width="198dp"
                 android:layout_height="50dp"
+                android:layout_marginTop="40dp"
+                android:layout_marginRight="7dp"
                 android:id="@+id/login_email"
                 android:background="@drawable/custom_edittext"
-                android:layout_marginTop="40dp"
                 android:padding="8dp"
                 android:hint="Email"
                 android:drawableLeft="@drawable/baseline_person_24"
@@ -49,11 +51,11 @@
                 android:inputType="text|textNoSuggestions"/>
 
             <EditText
-                android:layout_width="match_parent"
+                android:layout_width="198dp"
                 android:layout_height="50dp"
+                android:layout_marginTop="20dp"
                 android:id="@+id/login_password"
                 android:background="@drawable/custom_edittext"
-                android:layout_marginTop="20dp"
                 android:inputType="textPassword"
                 android:padding="8dp"
                 android:hint="Password"
@@ -62,12 +64,13 @@
                 android:drawablePadding="8dp" />
 
             <Button
-                android:layout_width="match_parent"
-                android:layout_height="60dp"
+                android:layout_width="132dp"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="40dp"
+                android:layout_marginTop="30dp"
                 android:text="Login"
                 android:id="@+id/login_button"
                 android:textSize="18sp"
-                android:layout_marginTop="30dp"
                 android:backgroundTint="@color/appColor"
                 app:cornerRadius = "20dp"/>
 
@@ -79,7 +82,7 @@
                 android:layout_marginTop="20dp"
                 android:padding="8dp"
                 android:layout_gravity="center"
-                android:text="Not yet registered? Sign Up"
+                android:text="Not yet registered?\n Sign Up"
                 android:textAlignment="center"
                 android:textColor="@color/appColor"
                 android:textSize="18sp" />
