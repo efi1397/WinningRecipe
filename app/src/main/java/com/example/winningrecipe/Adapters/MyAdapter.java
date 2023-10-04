@@ -98,6 +98,12 @@ public class MyAdapter extends RecyclerView.Adapter<MyViewHolder>{
                 Log.d("Remove recipe","Recipe removed successfully.");
             }
         });
+        Recipe recipe = dataList.get(position);
+        if (recipe.getIsFavorite()) {
+            holder.favoriteBtn.setImageResource(R.drawable.baseline_white_favorite_24);
+        } else {
+            holder.favoriteBtn.setImageResource(R.drawable.baseline_white_favorite_border_24);
+        }
         holder.favoriteBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {

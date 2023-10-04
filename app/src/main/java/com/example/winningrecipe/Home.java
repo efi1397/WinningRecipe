@@ -3,12 +3,10 @@ package com.example.winningrecipe;
 import android.content.Context;
 import android.content.SharedPreferences;
 import android.os.Bundle;
-import android.text.TextUtils;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.ImageView;
+
 import androidx.appcompat.widget.SearchView;
 
 import android.widget.TextView;
@@ -16,7 +14,6 @@ import android.widget.Toast;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
-import androidx.fragment.app.FragmentResultListener;
 import androidx.navigation.Navigation;
 import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
@@ -43,6 +40,7 @@ public class Home extends Fragment {
     };
 
     FloatingActionButton addRecipeBtn;
+    FloatingActionButton favoriteBtn;
     TextView[] categoryTextViews;
     RecyclerView[] recyclerViews;
     List<Recipe>[] dataLists;
@@ -54,6 +52,8 @@ public class Home extends Fragment {
     String user;// = "y1234@gmail,com";
     SharedPreferences sharedPref;
     SharedPreferences.Editor editor;
+    Boolean flagFavoriteBtn = false;
+
 
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
@@ -70,8 +70,8 @@ public class Home extends Fragment {
         searchView.clearFocus();
 
 
-
         addRecipeBtn = viewF.findViewById(R.id.addFirebaseMoviesBtn);
+        favoriteBtn = viewF.findViewById(R.id.favoriteBtn);
 
         // Initialize arrays for category TextViews, RecyclerViews, data lists, and adapters
         categoryTextViews = new TextView[CATEGORIES.length];
@@ -99,10 +99,6 @@ public class Home extends Fragment {
             categoryTextViews[i].setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View view) {
-//                    Bundle args = new Bundle();
-//                    args.putString("category", category);
-//
-//                    getParentFragmentManager().setFragmentResult("category", args);
                     editor.putString("category", category);
                     editor.commit();
                     Navigation.findNavController(viewF).navigate(R.id.action_home_to_categoryRecipesFragment);
@@ -142,8 +138,20 @@ public class Home extends Fragment {
                 Navigation.findNavController(viewF).navigate(R.id.action_home4_to_addRecipe);
             }
         });
-
-
+        favoriteBtn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                if (!flagFavoriteBtn) {
+                    favoriteBtn.setImageResource(R.drawable.baseline_white_favorite_24);
+                    showFavoriteItems();
+                    flagFavoriteBtn = true;
+                } else {
+                    favoriteBtn.setImageResource(R.drawable.baseline_white_favorite_border_24);
+                    showAllItems();
+                    flagFavoriteBtn = false;
+                }
+            }
+        });
         searchView.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
             @Override
             public boolean onQueryTextSubmit(String query) {
@@ -152,13 +160,14 @@ public class Home extends Fragment {
 
             @Override
             public boolean onQueryTextChange(String newText) {
-                searchList(newText);
+                if (flagFavoriteBtn) {
+                    searchListForFavorite(newText);
+                } else {
+                    searchList(newText);
+                }
                 return true;
             }
         });
-
-
-
         return viewF;
     }
 
@@ -209,6 +218,36 @@ public class Home extends Fragment {
         }
     }
 
+    public void showAllItems(){
+        ArrayList<List<Recipe>> searchLists = new ArrayList<>();
+        // To show everything
+        for (int i = 0; i < CATEGORIES.length; i++) {
+            List<Recipe> currentSearchList = new ArrayList<>();
+            currentSearchList.addAll(dataLists[i]);
+            searchLists.add(currentSearchList);
+            adapters[i].searchDataList(currentSearchList);
+        }
+    }
+
+    public void showFavoriteItems() {
+        ArrayList<List<Recipe>> searchLists = new ArrayList<>();
+
+        // Create lists based on favorite
+        for (int i = 0; i < CATEGORIES.length; i++) {
+            List<Recipe> currentSearchList = new ArrayList<>();
+            for (Recipe recipe : dataLists[i]) {
+                if (recipe.getIsFavorite()) {
+                    currentSearchList.add(recipe);
+                }
+            }
+            if (currentSearchList.isEmpty()) {
+                currentSearchList.add(emptyRecipe);
+            }
+            searchLists.add(currentSearchList);
+            adapters[i].searchDataList(currentSearchList);
+        }
+    }
+
     public void searchList(String text) {
         ArrayList<List<Recipe>> searchLists = new ArrayList<>();
 
@@ -221,11 +260,38 @@ public class Home extends Fragment {
                         currentSearchList.add(recipe);
                     }
                 }
-                if (currentSearchList.isEmpty()){
+                if (currentSearchList.isEmpty()) {
                     currentSearchList.add(emptyRecipe);
                 }
             } else {
                 currentSearchList.addAll(dataLists[i]);
+            }
+            searchLists.add(currentSearchList);
+            adapters[i].searchDataList(currentSearchList);
+        }
+    }
+
+    public void searchListForFavorite(String text) {
+        ArrayList<List<Recipe>> searchLists = new ArrayList<>();
+
+        // Create lists based on search
+        for (int i = 0; i < CATEGORIES.length; i++) {
+            List<Recipe> currentSearchList = new ArrayList<>();
+            if (!text.isEmpty()) {
+                for (Recipe recipe : dataLists[i]) {
+                    if ((recipe.getIsFavorite()) && recipe.getName().toLowerCase().contains(text.toLowerCase())) {
+                        currentSearchList.add(recipe);
+                    }
+                }
+            } else {
+                for (Recipe recipe : dataLists[i]) {
+                    if (recipe.getIsFavorite()) {
+                        currentSearchList.add(recipe);
+                    }
+                }
+            }
+            if (currentSearchList.isEmpty()) {
+                currentSearchList.add(emptyRecipe);
             }
             searchLists.add(currentSearchList);
             adapters[i].searchDataList(currentSearchList);
