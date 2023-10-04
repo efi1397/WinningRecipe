@@ -119,8 +119,18 @@ public class MyAdapter extends RecyclerView.Adapter<MyViewHolder>{
                 // Toggle the isFavorite state of the corresponding Recipe object
                 Recipe recipe = dataList.get(position);
                 // Create here function that represent an edit form for the recipe and then use updateRecipe function
-                firebaseHandler.updateRecipe(user.replace(".",","),recipe.getCategory(),recipe);
-                Log.d("Remove recipe","Recipe changed successfully.");
+
+                Bundle args = new Bundle();
+                args.putString("recipeName", dataList.get(holder.getAdapterPosition()).getName());
+                args.putString("recipeCategory", dataList.get(holder.getAdapterPosition()).getCategory());
+                args.putString("description", dataList.get(holder.getAdapterPosition()).getDescription());
+                args.putString("imageUrl", dataList.get(holder.getAdapterPosition()).getImageUrl());
+                args.putString("ingredients", dataList.get(holder.getAdapterPosition()).getIngredients().toString());
+                args.putString("preparationTime", String.valueOf(dataList.get(holder.getAdapterPosition()).getPreparationTime()));
+                fragmentManager.setFragmentResult("requestKey_editbtn", args);
+
+                Navigation.findNavController(viewF).navigate(R.id.action_home_to_updateRecipe);
+                Log.d("Update recipe","Recipe changed successfully.");
             }
         });
     }

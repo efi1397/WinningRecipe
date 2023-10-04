@@ -19,6 +19,9 @@
         <action
             android:id="@+id/action_home_to_categoryRecipesFragment"
             app:destination="@id/categoryRecipesFragment" />
+        <action
+            android:id="@+id/action_home_to_updateRecipe"
+            app:destination="@id/updateRecipe" />
     </fragment>
     <fragment
         android:id="@+id/addRecipe"
@@ -67,5 +70,14 @@
         <action
             android:id="@+id/action_signUpFragment_to_loginFragment"
             app:destination="@id/loginFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/updateRecipe"
+        android:name="com.example.winningrecipe.UpdateRecipe"
+        android:label="fragment_update_recipe"
+        tools:layout="@layout/fragment_update_recipe" >
+        <action
+            android:id="@+id/action_updateRecipe_to_home"
+            app:destination="@id/home" />
     </fragment>
 </navigation>

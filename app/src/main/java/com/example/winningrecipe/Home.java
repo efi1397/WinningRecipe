@@ -83,7 +83,7 @@ public class Home extends Fragment {
         editor = sharedPref.edit();
 
         String user = SingletonUser.getInstance().getUser().replace(".", ",");
-        Toast.makeText(getContext(), user, Toast.LENGTH_SHORT).show();
+        Toast.makeText(getContext(), user.replace(",", "."), Toast.LENGTH_SHORT).show();
 
 
         // Find and set up category TextViews and RecyclerViews

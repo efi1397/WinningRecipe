@@ -148,15 +148,10 @@ public class FirebaseHandler {
                         Toast.makeText(activity, "Image upload failed: " + e.getMessage(), Toast.LENGTH_SHORT).show();
                     }
                 });
-            } else {
-                // Handle the case where the image stream is null
-                listener.onImageUploadFailure(new IOException("Image stream is null"));
-                Toast.makeText(activity, "Image not found", Toast.LENGTH_SHORT).show();
             }
         } catch (FileNotFoundException e) {
             // Handle the case where the image file cannot be found
             listener.onImageUploadFailure(e);
-            Toast.makeText(activity, "Image not found", Toast.LENGTH_SHORT).show();
         }
     }
 
@@ -172,11 +167,6 @@ public class FirebaseHandler {
 
                         // Display a success message
                         Toast.makeText(activity, "Recipe added successfully.", Toast.LENGTH_SHORT).show();
-
-                        // Move to MainActivity after complete
-                        //Intent intent = new Intent(activity, MainActivity.class);
-                        //activity.startActivity(intent);
-                        //activity.finish(); // Close the current activity if needed
                     }
                 })
                 .addOnFailureListener(new OnFailureListener() {
@@ -279,7 +269,7 @@ public class FirebaseHandler {
     }
 
     public void updateRecipe(String user, String category, Recipe updatedRecipe) {
-        DatabaseReference databaseReference = FirebaseDatabase.getInstance().getReference("Users").child(user).child("Categories").child(category).child(updatedRecipe.getName());
+        DatabaseReference databaseReference = FirebaseDatabase.getInstance().getReference("Users").child(user).child("Categories").child(updatedRecipe.getCategory()).child(updatedRecipe.getName());
         databaseReference.setValue(updatedRecipe)
                 .addOnSuccessListener(new OnSuccessListener<Void>() {
                     @Override
