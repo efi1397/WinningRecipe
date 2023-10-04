@@ -9,6 +9,7 @@ import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentResultListener;
 import androidx.navigation.Navigation;
 
+import android.text.TextUtils;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -54,7 +55,12 @@ public class RecipeDetailsFragment extends Fragment {
                 recipe_name.setText(result.getString("recipeName"));
                 recipe_category.setText(result.getString("recipeCategory"));
                 recipe_instructions.setText(result.getString("description"));
-                recipe_ingredients.setText(result.getString("ingredients"));
+                String ingredients = result.getString("ingredients");
+                if (!TextUtils.isEmpty(ingredients)) {
+                    // Remove square brackets from the string
+                    ingredients = ingredients.replace("[", "").replace("]", "");
+                }
+                recipe_ingredients.setText(ingredients);
                 recipe_preparation_time.setText(result.getString("preparationTime"));
 
                 imageUrl = result.getString("imageUrl");
