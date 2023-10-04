@@ -174,9 +174,9 @@ public class FirebaseHandler {
                         Toast.makeText(activity, "Recipe added successfully.", Toast.LENGTH_SHORT).show();
 
                         // Move to MainActivity after complete
-                        Intent intent = new Intent(activity, MainActivity.class);
-                        activity.startActivity(intent);
-                        activity.finish(); // Close the current activity if needed
+//                        Intent intent = new Intent(activity, MainActivity.class);
+//                        activity.startActivity(intent);
+//                        activity.finish(); // Close the current activity if needed
                     }
                 })
                 .addOnFailureListener(new OnFailureListener() {

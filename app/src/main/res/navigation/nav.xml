@@ -24,7 +24,11 @@
         android:id="@+id/addRecipe"
         android:name="com.example.winningrecipe.AddRecipe"
         android:label="fragment_add_recipe"
-        tools:layout="@layout/fragment_add_recipe" />
+        tools:layout="@layout/fragment_add_recipe" >
+        <action
+            android:id="@+id/action_addRecipe_to_home"
+            app:destination="@id/home" />
+    </fragment>
     <fragment
         android:id="@+id/recipeDetailsFragment"
         android:name="com.example.winningrecipe.RecipeDetailsFragment"
@@ -38,7 +42,11 @@
         android:id="@+id/categoryRecipesFragment"
         android:name="com.example.winningrecipe.CategoryRecipesFragment"
         android:label="fragment_category_recipes"
-        tools:layout="@layout/fragment_category_recipes" />
+        tools:layout="@layout/fragment_category_recipes" >
+        <action
+            android:id="@+id/action_categoryRecipesFragment_to_home"
+            app:destination="@id/home" />
+    </fragment>
     <fragment
         android:id="@+id/loginFragment"
         android:name="com.example.winningrecipe.LoginFragment"

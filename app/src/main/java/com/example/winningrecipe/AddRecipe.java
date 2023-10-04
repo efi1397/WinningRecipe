@@ -2,10 +2,13 @@ package com.example.winningrecipe;
 
 import android.annotation.SuppressLint;
 import android.app.Activity;
+import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.net.Uri;
 import android.os.Bundle;
 
+import androidx.activity.OnBackPressedCallback;
 import androidx.activity.result.ActivityResult;
 import androidx.activity.result.ActivityResultCallback;
 import androidx.activity.result.ActivityResultLauncher;
@@ -43,6 +46,7 @@ public class AddRecipe extends Fragment {
     Button saveButton;
     Uri uri;
     String user;
+    SharedPreferences sharedPref;
 
     @SuppressLint("MissingInflatedId")
     @Override
@@ -50,6 +54,16 @@ public class AddRecipe extends Fragment {
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
         View viewF = inflater.inflate(R.layout.fragment_add_recipe, container, false);
+
+        OnBackPressedCallback callback = new OnBackPressedCallback(true /* enabled by default */) {
+            @Override
+            public void handleOnBackPressed() {
+                // Handle the back button event
+                Log.d("result" , "yes");
+                Navigation.findNavController(viewF).navigate(R.id.action_addRecipe_to_home);
+            }
+        };
+        requireActivity().getOnBackPressedDispatcher().addCallback(getActivity(), callback);
 
         // Add TextInputLayouts for error messages
         TextInputLayout textInputLayoutName = viewF.findViewById(R.id.textInputLayoutName);
@@ -69,13 +83,16 @@ public class AddRecipe extends Fragment {
 
         // Disable text input in the uploadCategory field
         uploadCategory.setFocusable(false);
+
+        sharedPref = getActivity().getPreferences(Context.MODE_PRIVATE);
+        user = sharedPref.getString("email", "default_value").replace(".", ",");
         // Receive user's email from the Bundle
-        getParentFragmentManager().setFragmentResultListener("email_requestKey1", this, new FragmentResultListener() {
-            @Override
-            public void onFragmentResult(@NonNull String requestKey, @NonNull Bundle result) {
-                user = result.getString("email").replace(".", ",");
-            }
-        });
+//        getParentFragmentManager().setFragmentResultListener("email_requestKey1", this, new FragmentResultListener() {
+//            @Override
+//            public void onFragmentResult(@NonNull String requestKey, @NonNull Bundle result) {
+//                user = result.getString("email").replace(".", ",");
+//            }
+//        });
         // list of categories
         uploadCategory.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -194,6 +211,9 @@ public class AddRecipe extends Fragment {
                     // Add recipe to DB
                     FirebaseHandler firebaseHandler = new FirebaseHandler();
                     firebaseHandler.addRecipeForCategory(user, category, name, recipe, getActivity());
+
+                    Navigation.findNavController(viewF).navigate(R.id.action_addRecipe_to_home);
+
                 }
             }
         });

@@ -1,5 +1,7 @@
 package com.example.winningrecipe;
 
+import android.content.Context;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 
 import androidx.annotation.NonNull;
@@ -36,16 +38,14 @@ public class CategoryRecipesFragment extends Fragment {
     DatabaseReference databaseReference;
     String categoryString;
     String user;
+    SharedPreferences sharedPref;
+    SharedPreferences.Editor editor;
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Receive user's email from the Bundle
-        getParentFragmentManager().setFragmentResultListener("email_requestKey2", this, new FragmentResultListener() {
-            @Override
-            public void onFragmentResult(@NonNull String requestKey, @NonNull Bundle result) {
-                user = result.getString("email").replace(".", ",");
-            }
-        });
+        user = sharedPref.getString("user", "default_value").replace(".", ",");
+
         // Inflate the layout for this fragment
         View viewF = inflater.inflate(R.layout.fragment_category_recipes, container, false);
 
@@ -57,29 +57,29 @@ public class CategoryRecipesFragment extends Fragment {
 
         FirebaseHandler firebaseHandler = new FirebaseHandler();
 
-        getParentFragmentManager().setFragmentResultListener("category", this, new FragmentResultListener() {
+
+        sharedPref = getActivity().getPreferences(Context.MODE_PRIVATE);
+        categoryString = sharedPref.getString("category", "default_value");
+
+        category.setText(categoryString);
+
+        // Retrieve recipes for the specified category
+        firebaseHandler.getRecipesByCategory(categoryString, new ValueEventListener() {
             @Override
-            public void onFragmentResult(@NonNull String requestKey, @NonNull Bundle result) {
-                categoryString = result.getString("category");
+            public void onDataChange(@NonNull DataSnapshot snapshot) {
+                dataList.clear();
+                for (DataSnapshot itemSnapshot : snapshot.getChildren()) {
+                    Recipe dataClass = itemSnapshot.getValue(Recipe.class);
+                    dataList.add(dataClass);
+                }
+            }
 
-                // Retrieve recipes for the specified category
-                firebaseHandler.getRecipesByCategory(categoryString, new ValueEventListener() {
-                    @Override
-                    public void onDataChange(@NonNull DataSnapshot snapshot) {
-                        dataList.clear();
-                        for (DataSnapshot itemSnapshot : snapshot.getChildren()) {
-                            Recipe dataClass = itemSnapshot.getValue(Recipe.class);
-                            dataList.add(dataClass);
-                        }
-                    }
-
-                    @Override
-                    public void onCancelled(@NonNull DatabaseError error) {
-                        Toast.makeText(getContext(), error.getMessage().toString(), Toast.LENGTH_SHORT).show();
-                    }
-                });
+            @Override
+            public void onCancelled(@NonNull DatabaseError error) {
+                Toast.makeText(getContext(), error.getMessage().toString(), Toast.LENGTH_SHORT).show();
             }
         });
+
 
         return viewF;
     }
