@@ -4,9 +4,11 @@ import android.content.Context;
 import android.content.SharedPreferences;
 import android.os.Bundle;
 
+import androidx.activity.OnBackPressedCallback;
 import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentResultListener;
+import androidx.navigation.Navigation;
 import androidx.recyclerview.widget.RecyclerView;
 
 import android.util.Log;
@@ -40,11 +42,12 @@ public class CategoryRecipesFragment extends Fragment {
     String user;
     SharedPreferences sharedPref;
     SharedPreferences.Editor editor;
+
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Receive user's email from the Bundle
-        user = sharedPref.getString("user", "default_value").replace(".", ",");
+        String user = SingletonUser.getInstance().getUser().replace(".", ",");
 
         // Inflate the layout for this fragment
         View viewF = inflater.inflate(R.layout.fragment_category_recipes, container, false);
@@ -80,6 +83,15 @@ public class CategoryRecipesFragment extends Fragment {
             }
         });
 
+        OnBackPressedCallback callback = new OnBackPressedCallback(true /* enabled by default */) {
+            @Override
+            public void handleOnBackPressed() {
+                // Handle the back button event
+                Log.d("result" , "yes");
+                Navigation.findNavController(viewF).navigate(R.id.action_categoryRecipesFragment_to_home);
+            }
+        };
+        requireActivity().getOnBackPressedDispatcher().addCallback(getActivity(), callback);
 
         return viewF;
     }

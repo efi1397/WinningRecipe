@@ -4,7 +4,6 @@ import android.annotation.SuppressLint;
 import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
-import android.content.SharedPreferences;
 import android.net.Uri;
 import android.os.Bundle;
 
@@ -46,7 +45,6 @@ public class AddRecipe extends Fragment {
     Button saveButton;
     Uri uri;
     String user;
-    SharedPreferences sharedPref;
 
     @SuppressLint("MissingInflatedId")
     @Override
@@ -84,8 +82,7 @@ public class AddRecipe extends Fragment {
         // Disable text input in the uploadCategory field
         uploadCategory.setFocusable(false);
 
-        sharedPref = getActivity().getPreferences(Context.MODE_PRIVATE);
-        user = sharedPref.getString("email", "default_value").replace(".", ",");
+        user = SingletonUser.getInstance().getUser().replace(".", ",");
         // Receive user's email from the Bundle
 //        getParentFragmentManager().setFragmentResultListener("email_requestKey1", this, new FragmentResultListener() {
 //            @Override

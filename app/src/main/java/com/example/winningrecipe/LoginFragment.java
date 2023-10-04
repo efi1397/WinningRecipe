@@ -2,7 +2,6 @@ package com.example.winningrecipe;
 
 import android.app.Activity;
 import android.content.Context;
-import android.content.SharedPreferences;
 import android.os.Bundle;
 
 import androidx.annotation.NonNull;
@@ -29,9 +28,6 @@ public class LoginFragment extends Fragment {
     private TextView signupRedirectText;
     private Button loginButton;
     private FirebaseAuth auth;
-    SharedPreferences sharedPref;
-    SharedPreferences.Editor editor;
-
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -59,13 +55,8 @@ public class LoginFragment extends Fragment {
                         public void onSuccess(AuthResult authResult) {
                             Toast.makeText(getContext(), "email: " + email, Toast.LENGTH_SHORT).show();
 
-
-                            sharedPref = getActivity().getPreferences(Context.MODE_PRIVATE);
-                            editor = sharedPref.edit();
-                            editor.putString("user", email);
-                            editor.commit();
-
-
+                            SingletonUser user = SingletonUser.getInstance();
+                            user.setUser(email);
 
                             Navigation.findNavController(viewF).navigate(R.id.action_loginFragment_to_home);
                             //ass args of email to Home page

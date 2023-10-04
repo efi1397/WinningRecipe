@@ -33,6 +33,7 @@ import java.util.List;
 import Utils.FirebaseHandler;
 import Utils.Recipe;
 
+
 public class Home extends Fragment {
 
     // Constants for categories
@@ -82,8 +83,7 @@ public class Home extends Fragment {
         sharedPref = getActivity().getPreferences(Context.MODE_PRIVATE);
         editor = sharedPref.edit();
 
-        user = sharedPref.getString("user", "default_value").replace(".", ",");
-
+        String user = SingletonUser.getInstance().getUser().replace(".", ",");
         Toast.makeText(getContext(), user, Toast.LENGTH_SHORT).show();
 
 
