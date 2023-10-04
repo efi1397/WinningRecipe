@@ -37,18 +37,18 @@
                 android:textColor="@color/appColor"/>
 
             <EditText
+                android:id="@+id/login_email"
                 android:layout_width="198dp"
                 android:layout_height="50dp"
                 android:layout_marginTop="40dp"
                 android:layout_marginRight="7dp"
-                android:id="@+id/login_email"
                 android:background="@drawable/custom_edittext"
-                android:padding="8dp"
-                android:hint="Email"
                 android:drawableLeft="@drawable/baseline_person_24"
-                android:textColor="@color/black"
                 android:drawablePadding="8dp"
-                android:inputType="text|textNoSuggestions"/>
+                android:hint="Email"
+                android:inputType="text|textNoSuggestions"
+                android:padding="8dp"
+                android:textColor="@color/black" />
 
             <EditText
                 android:layout_width="198dp"

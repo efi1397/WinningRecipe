@@ -114,7 +114,12 @@ public class UpdateRecipe extends Fragment {
                     recipeIngredients = recipeIngredients.replace("[", "").replace("]", "");
                     uploadIngredients.setText(recipeIngredients);
                 }
-
+                if (!TextUtils.isEmpty(updateImageUrl)) {
+                    // Show current recipe image
+                    Glide.with(requireContext())
+                            .load(updateImageUrl)
+                            .into(uploadImage);
+                }
 
             }
         });
