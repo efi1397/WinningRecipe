@@ -66,7 +66,6 @@ public class Home extends Fragment {
         View viewF = inflater.inflate(R.layout.fragment_home, container, false);
 
         progressIndicator = viewF.findViewById(R.id.loading_progress);
-        progressIndicator.show();
         searchView = viewF.findViewById(R.id.search);
         searchView.clearFocus();
 
@@ -130,7 +129,12 @@ public class Home extends Fragment {
         for (String category : CATEGORIES) {
             setupCategoryListener(firebaseHandler, user, category);
         }
-        progressIndicator.hide();
+
+        // Show the CircularProgressIndicator initially
+        progressIndicator.show();
+
+        // Hide the CircularProgressIndicator when all recipes are loaded
+        hideProgressIndicatorWhenAllRecipesLoaded();
 
         addRecipeBtn.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -177,13 +181,32 @@ public class Home extends Fragment {
                 if (dataList.isEmpty()) {
                     dataList.add(emptyRecipe);
                 }
+
+                hideProgressIndicatorWhenAllRecipesLoaded();
             }
 
             @Override
             public void onCancelled(@NonNull DatabaseError error) {
                 Toast.makeText(getContext(), error.getMessage().toString(), Toast.LENGTH_SHORT).show();
+
+                // Hide the progress indicator in case of an error.
+                progressIndicator.hide();
             }
         });
+    }
+
+    private void hideProgressIndicatorWhenAllRecipesLoaded() {
+        boolean allRecipesLoaded = true;
+        for (List<Recipe> dataList : dataLists) {
+            if (dataList.isEmpty()) {
+                allRecipesLoaded = false;
+                break;
+            }
+        }
+
+        if (allRecipesLoaded) {
+            progressIndicator.hide();
+        }
     }
 
     public void searchList(String text) {

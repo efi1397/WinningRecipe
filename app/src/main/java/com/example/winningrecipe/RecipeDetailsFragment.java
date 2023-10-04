@@ -28,7 +28,6 @@ public class RecipeDetailsFragment extends Fragment {
     DatabaseReference databaseReference;
     String imageUrl = "";
 
-
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
