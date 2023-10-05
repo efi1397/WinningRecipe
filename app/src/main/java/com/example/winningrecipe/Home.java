@@ -43,6 +43,7 @@ public class Home extends Fragment {
 
     FloatingActionButton addRecipeBtn;
     FloatingActionButton favoriteBtn;
+    FloatingActionButton logoutBtn;
     TextView[] categoryTextViews;
     RecyclerView[] recyclerViews;
     List<Recipe>[] dataLists;
@@ -73,6 +74,7 @@ public class Home extends Fragment {
 
         addRecipeBtn = viewF.findViewById(R.id.addFirebaseMoviesBtn);
         favoriteBtn = viewF.findViewById(R.id.favoriteBtn);
+        logoutBtn = viewF.findViewById(R.id.logoutBtn);
         userEmailTextView = viewF.findViewById(R.id.userEmailTextView);
 
         // Initialize arrays for category TextViews, RecyclerViews, data lists, and adapters
@@ -156,6 +158,12 @@ public class Home extends Fragment {
                     showAllItems();
                     flagFavoriteBtn = false;
                 }
+            }
+        });
+        logoutBtn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Navigation.findNavController(viewF).navigate(R.id.action_home_to_login);
             }
         });
         searchView.setOnQueryTextListener(new SearchView.OnQueryTextListener() {

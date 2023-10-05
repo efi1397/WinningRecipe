@@ -346,6 +346,16 @@
         android:layout_alignBottom="@+id/scrollView">
 
         <com.github.clans.fab.FloatingActionButton
+            android:id="@+id/logoutBtn"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:minHeight="48dp"
+            app:fab_colorNormal="@color/appColor"
+            app:fab_colorPressed="@color/appColor"
+            android:src="@drawable/logout"
+            app:fab_size="mini"/>
+
+        <com.github.clans.fab.FloatingActionButton
             android:id="@+id/favoriteBtn"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
