@@ -352,7 +352,7 @@
             android:minHeight="48dp"
             app:fab_colorNormal="@color/appColor"
             app:fab_colorPressed="@color/appColor"
-            android:src="@drawable/logout"
+            android:src="@drawable/logout_icon"
             app:fab_size="mini"/>
 
         <com.github.clans.fab.FloatingActionButton
