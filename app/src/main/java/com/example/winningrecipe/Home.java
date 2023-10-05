@@ -24,6 +24,8 @@ import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.ValueEventListener;
+
+import java.text.MessageFormat;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
@@ -49,11 +51,11 @@ public class Home extends Fragment {
     Recipe emptyRecipe;
     SearchView searchView;
     CircularProgressIndicator progressIndicator;
-    String user;// = "y1234@gmail,com";
+    String user;
     SharedPreferences sharedPref;
     SharedPreferences.Editor editor;
     Boolean flagFavoriteBtn = false;
-
+    TextView userEmailTextView;
 
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
@@ -69,9 +71,9 @@ public class Home extends Fragment {
         searchView = viewF.findViewById(R.id.search);
         searchView.clearFocus();
 
-
         addRecipeBtn = viewF.findViewById(R.id.addFirebaseMoviesBtn);
         favoriteBtn = viewF.findViewById(R.id.favoriteBtn);
+        userEmailTextView = viewF.findViewById(R.id.userEmailTextView);
 
         // Initialize arrays for category TextViews, RecyclerViews, data lists, and adapters
         categoryTextViews = new TextView[CATEGORIES.length];
@@ -85,6 +87,10 @@ public class Home extends Fragment {
         String user = SingletonUser.getInstance().getUser().replace(".", ",");
         Toast.makeText(getContext(), user.replace(",", "."), Toast.LENGTH_SHORT).show();
 
+        // Show the username without the email in home page
+        String username = user.replace(",", ".");
+        String extractedUsername = username.split("@")[0];
+        userEmailTextView.setText(MessageFormat.format("Hey {0}, what you''d like to make today?", extractedUsername));
 
         // Find and set up category TextViews and RecyclerViews
         for (int i = 0; i < CATEGORIES.length; i++) {

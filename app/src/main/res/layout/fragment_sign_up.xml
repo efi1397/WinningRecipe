@@ -80,7 +80,7 @@
                 android:layout_gravity="center"
                 android:layout_marginTop="10dp"
                 android:padding="8dp"
-                android:text="Already an user? Login"
+                android:text="Already a user? Login"
                 android:textColor="@color/appColor"
                 android:textSize="18sp" />
 
