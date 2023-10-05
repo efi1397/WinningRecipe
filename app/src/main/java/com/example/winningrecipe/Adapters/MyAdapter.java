@@ -155,7 +155,6 @@ class MyViewHolder extends RecyclerView.ViewHolder{
     ImageView editBtn;
     ImageView recipeImage;
     ImageButton favoriteBtn;
-
     TextView recipeName;
     ConstraintLayout recipeConstraintLayout;
 

@@ -61,8 +61,7 @@ public class RecipeDetailsFragment extends Fragment {
                     ingredients = ingredients.replace("[", "").replace("]", "");
                 }
                 recipe_ingredients.setText(ingredients);
-                recipe_preparation_time.setText(result.getString("preparationTime"));
-
+                recipe_preparation_time.setText(String.format("%s minutes", result.getString("preparationTime"))); // add minutes to preparation time
                 imageUrl = result.getString("imageUrl");
                 Glide.with(getContext()).load(imageUrl).into(single_recipe_image);
 

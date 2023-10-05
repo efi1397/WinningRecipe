@@ -53,13 +53,10 @@ public class LoginFragment extends Fragment {
                             .addOnSuccessListener(new OnSuccessListener<AuthResult>() {
                         @Override
                         public void onSuccess(AuthResult authResult) {
-                            Toast.makeText(getContext(), "email: " + email, Toast.LENGTH_SHORT).show();
-
                             SingletonUser user = SingletonUser.getInstance();
                             user.setUser(email);
 
                             Navigation.findNavController(viewF).navigate(R.id.action_loginFragment_to_home);
-                            //ass args of email to Home page
                         }
                     }).addOnFailureListener(new OnFailureListener() {
                                 @Override
