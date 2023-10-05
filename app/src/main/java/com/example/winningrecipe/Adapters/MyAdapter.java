@@ -56,11 +56,21 @@ public class MyAdapter extends RecyclerView.Adapter<MyViewHolder>{
     @Override
     public void onBindViewHolder(@NonNull MyViewHolder holder, int position) {
         Glide.with(context).load(dataList.get(position).getImageUrl()).into(holder.recipeImage);
+        Recipe currentRecipe = dataList.get(position);
 
-        if (Objects.equals(dataList.get(position).getImageUrl(), addRecipeUrl)) {
+        // Show recipeName and Hide favoriteBtn, deleteBtn, editBtn for empty_recipe
+        if (Objects.equals(currentRecipe.getImageUrl(), addRecipeUrl)) {
             holder.recipeName.setText("");
-        }else {
-            holder.recipeName.setText(dataList.get(position).getName());
+            // Hide the buttons for emptyRecipe
+            holder.favoriteBtn.setVisibility(View.GONE);
+            holder.deleteBtn.setVisibility(View.GONE);
+            holder.editBtn.setVisibility(View.GONE);
+        } else {
+            holder.recipeName.setText(currentRecipe.getName());
+            // Show the buttons for other recipes
+            holder.favoriteBtn.setVisibility(View.VISIBLE);
+            holder.deleteBtn.setVisibility(View.VISIBLE);
+            holder.editBtn.setVisibility(View.VISIBLE);
         }
 
         holder.recipeConstraintLayout.setOnClickListener(new View.OnClickListener() {
