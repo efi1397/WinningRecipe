@@ -163,6 +163,7 @@ public class Home extends Fragment {
         logoutBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+                Toast.makeText(getContext(),"Signed out.", Toast.LENGTH_SHORT).show();
                 Navigation.findNavController(viewF).navigate(R.id.action_home_to_login);
             }
         });
