@@ -220,7 +220,7 @@ public class UpdateRecipe extends Fragment {
                 }
 
                 if (!isValidDescription) {
-                    textInputLayoutDescription.setError("Description is required.");
+                    textInputLayoutDescription.setError("Instruction is required.");
                 } else {
                     textInputLayoutDescription.setError(null); // Clear error message if valid
                 }

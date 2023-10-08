@@ -159,7 +159,7 @@
 			android:layout_marginStart="40dp"
 			android:layout_marginTop="5dp"
 			android:layout_marginEnd="10dp"
-			android:hint="Recipe Description"
+			android:hint="Recipe Instructions"
 			android:textColorHint="@color/appColor"
 			android:textColor="@color/appColor"
 			app:layout_constraintEnd_toEndOf="parent"
