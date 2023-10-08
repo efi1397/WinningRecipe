@@ -25,6 +25,9 @@
         <action
             android:id="@+id/action_home_to_login"
             app:destination="@id/loginFragment" />
+        <action
+            android:id="@+id/action_home_to_home_api_objects"
+            app:destination="@id/HomeApiObjects" />
     </fragment>
     <fragment
         android:id="@+id/addRecipe"
@@ -83,4 +86,25 @@
             android:id="@+id/action_updateRecipe_to_home"
             app:destination="@id/home" />
     </fragment>
+    <fragment
+        android:id="@+id/HomeApiObjects"
+        android:name="com.example.winningrecipe.HomeApiObjects"
+        android:label="fragment_home_api_objects"
+        tools:layout="@layout/fragment_home_api_objects" >
+    </fragment>
+    <action
+        android:id="@+id/action_home_api_objects_to_recipe_api_detail"
+        app:destination="@id/RecipeDetailApiFragment" />
+    <action
+        android:id="@+id/action_home_api_objects_to_home"
+        app:destination="@id/home" />
+    <fragment
+        android:id="@+id/RecipeDetailApiFragment"
+        android:name="com.example.winningrecipe.RecipeDetailApiFragment"
+        android:label="fragment_recipe_api_detail"
+        tools:layout="@layout/fragment_recipe_api_detail" >
+    </fragment>
+    <action
+        android:id="@+id/action_recipe_detail_api_to_home_api_objects"
+        app:destination="@id/HomeApiObjects" />
 </navigation>

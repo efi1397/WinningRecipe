@@ -3,6 +3,7 @@ package com.example.winningrecipe;
 import android.content.Context;
 import android.content.SharedPreferences;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -43,6 +44,7 @@ public class Home extends Fragment {
 
     FloatingActionButton addRecipeBtn;
     FloatingActionButton favoriteBtn;
+    FloatingActionButton apiBtn;
     FloatingActionButton logoutBtn;
     TextView[] categoryTextViews;
     RecyclerView[] recyclerViews;
@@ -75,6 +77,7 @@ public class Home extends Fragment {
         addRecipeBtn = viewF.findViewById(R.id.addFirebaseMoviesBtn);
         favoriteBtn = viewF.findViewById(R.id.favoriteBtn);
         logoutBtn = viewF.findViewById(R.id.logoutBtn);
+        apiBtn = viewF.findViewById(R.id.apiBtn);
         userEmailTextView = viewF.findViewById(R.id.userEmailTextView);
 
         // Initialize arrays for category TextViews, RecyclerViews, data lists, and adapters
@@ -165,6 +168,14 @@ public class Home extends Fragment {
             public void onClick(View view) {
                 Toast.makeText(getContext(),"Signed out.", Toast.LENGTH_SHORT).show();
                 Navigation.findNavController(viewF).navigate(R.id.action_home_to_login);
+            }
+        });
+        apiBtn.setOnClickListener(new View.OnClickListener() {
+            @Override
+
+            public void onClick(View v) {
+                Log.d("progressIndicator" , "press nav");
+                Navigation.findNavController(viewF).navigate(R.id.action_home_to_home_api_objects);
             }
         });
         searchView.setOnQueryTextListener(new SearchView.OnQueryTextListener() {

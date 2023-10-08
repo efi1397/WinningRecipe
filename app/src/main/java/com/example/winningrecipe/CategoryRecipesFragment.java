@@ -36,7 +36,6 @@ public class CategoryRecipesFragment extends Fragment {
     RecyclerView recyclerView;
     MyAdapter myAdapter;
     List<Recipe> dataList;
-
     DatabaseReference databaseReference;
     String categoryString;
     String user;
