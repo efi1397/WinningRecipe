@@ -3,6 +3,7 @@ package com.example.winningrecipe;
 import android.content.Context;
 import android.content.SharedPreferences;
 import android.os.Bundle;
+import android.os.Handler;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -172,12 +173,12 @@ public class Home extends Fragment {
         });
         apiBtn.setOnClickListener(new View.OnClickListener() {
             @Override
-
             public void onClick(View v) {
-                Log.d("progressIndicator" , "press nav");
+                Log.d("progressIndicator", "press nav");
                 Navigation.findNavController(viewF).navigate(R.id.action_home_to_home_api_objects);
             }
         });
+
         searchView.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
             @Override
             public boolean onQueryTextSubmit(String query) {

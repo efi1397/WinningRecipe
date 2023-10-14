@@ -2,6 +2,7 @@ package com.example.winningrecipe;
 
 import android.annotation.SuppressLint;
 import android.app.AlertDialog;
+import android.os.AsyncTask;
 import android.os.Bundle;
 
 import androidx.activity.OnBackPressedCallback;
@@ -11,37 +12,21 @@ import androidx.navigation.Navigation;
 import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
-import android.os.Handler;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.ProgressBar;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import com.android.volley.Request;
-import com.android.volley.Response;
-import com.android.volley.VolleyError;
-import com.android.volley.toolbox.JsonObjectRequest;
-
-import com.example.winningrecipe.Adapters.MyAdapter;
 import com.example.winningrecipe.Adapters.MyAdapterApi;
 import com.example.winningrecipe.Models.ApiObject;
-import com.example.winningrecipe.Models.DataClass;
-import com.example.winningrecipe.R;
 import com.example.winningrecipe.Services.DataService;
 import com.google.android.material.progressindicator.CircularProgressIndicator;
 import com.google.firebase.database.ValueEventListener;
 
-import org.json.JSONException;
-import org.json.JSONObject;
-
 import java.text.MessageFormat;
 import java.util.ArrayList;
-import java.util.List;
 
-import Utils.Recipe;
 
 /**
  * A simple {@link Fragment} subclass.
@@ -99,11 +84,22 @@ public class HomeApiObjects extends Fragment {
     MyAdapterApi adapterApi;
     TextView userEmailTextView;
 
+    CircularProgressIndicator progressIndicatorApi;
+
+    String extractedUsername;
+
+    View viewF;
+
+
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
+        viewF = inflater.inflate(R.layout.fragment_home_api_objects, container, false);
+
+        progressIndicatorApi = viewF.findViewById(R.id.loading_progress_api);
+        progressIndicatorApi.show();
+
         // Inflate the layout for this fragment
-        View viewF = inflater.inflate(R.layout.fragment_home_api_objects,container,false);
         userEmailTextView = viewF.findViewById(R.id.userEmailTextView);
         recyclerView = viewF.findViewById(R.id.recyclerViewApi);
         searchView = viewF.findViewById(R.id.searchApi);
@@ -113,19 +109,17 @@ public class HomeApiObjects extends Fragment {
         Toast.makeText(getContext(), "Loading Data...", Toast.LENGTH_SHORT).show();
         // Show the username without the email in home page
         String username = user.replace(",", ".");
-        String extractedUsername = username.split("@")[0];
+        extractedUsername = username.split("@")[0];
         userEmailTextView.setText(MessageFormat.format("Hey {0}, what you''d like to make today?", extractedUsername));
 
-        showData();
-
-        adapterApi = new MyAdapterApi(getContext(), dataList, viewF, getParentFragmentManager());
-        recyclerView.setAdapter(adapterApi);
-
-        GridLayoutManager gridLayoutManager = new GridLayoutManager(getContext(), 1);
-        recyclerView.setLayoutManager(gridLayoutManager);
-
-        adapterApi =new MyAdapterApi(getContext(),dataList, viewF, getParentFragmentManager());
-        recyclerView.setAdapter(adapterApi);
+//        adapterApi = new MyAdapterApi(getContext(), dataList, viewF, getParentFragmentManager());
+//        recyclerView.setAdapter(adapterApi);
+//
+//        GridLayoutManager gridLayoutManager = new GridLayoutManager(getContext(), 1);
+//        recyclerView.setLayoutManager(gridLayoutManager);
+//
+//        adapterApi = new MyAdapterApi(getContext(),dataList, viewF, getParentFragmentManager());
+//        recyclerView.setAdapter(adapterApi);
 
         OnBackPressedCallback callback = new OnBackPressedCallback(true /* enabled by default */) {
             @Override
@@ -148,19 +142,51 @@ public class HomeApiObjects extends Fragment {
             }
         });
 
+        new LoadDataAsyncTask().execute();
+
         return viewF;
     }
 
-    private void showData() {
+    private class LoadDataAsyncTask extends AsyncTask<Void, Void, ArrayList<ApiObject>> {
+        @Override
+        protected ArrayList<ApiObject> doInBackground(Void... params) {
+            // Load data asynchronously (e.g., fetch data from the network)
+            return showData();
+        }
+
+        @Override
+        protected void onPostExecute(ArrayList<ApiObject> result) {
+            // This method runs on the main UI thread
+            // Update the UI with the loaded data
+            dataList = result;
+            userEmailTextView.setText(MessageFormat.format("Hey {0}, what you'd like to make today?", extractedUsername));
+            progressIndicatorApi.hide();
+
+            adapterApi = new MyAdapterApi(getContext(), dataList, viewF, getParentFragmentManager());
+            recyclerView.setAdapter(adapterApi);
+
+            GridLayoutManager gridLayoutManager = new GridLayoutManager(getContext(), 1);
+            recyclerView.setLayoutManager(gridLayoutManager);
+
+            adapterApi = new MyAdapterApi(getContext(),dataList, viewF, getParentFragmentManager());
+            recyclerView.setAdapter(adapterApi);
+
+        }
+    }
+
+    private ArrayList<ApiObject> showData() {
         DataService dataService = new DataService();
+        ArrayList<ApiObject> result = new ArrayList<>();
 
         // Search meal by first letter
         String str = "bcdefghijklmnopqrstuvwxyz";
 
-        dataList = dataService.getRecipesFromApi('a');
+        result.addAll(dataService.getRecipesFromApi('a'));
         for (char ch : str.toCharArray()) {
-            dataList.addAll(dataService.getRecipesFromApi(ch));
+            result.addAll(dataService.getRecipesFromApi(ch));
         }
+
+        return result;
     }
 
     public void searchList(String text){
