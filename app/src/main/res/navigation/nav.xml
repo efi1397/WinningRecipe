@@ -55,6 +55,9 @@
         <action
             android:id="@+id/action_categoryRecipesFragment_to_home"
             app:destination="@id/home" />
+        <action
+            android:id="@+id/action_categoryRecipesFragment_to_recipe_details_fragment"
+            app:destination="@id/recipeDetailsFragment" />
     </fragment>
     <fragment
         android:id="@+id/loginFragment"

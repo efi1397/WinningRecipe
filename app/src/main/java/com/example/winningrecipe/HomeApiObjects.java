@@ -1,7 +1,5 @@
 package com.example.winningrecipe;
 
-import android.annotation.SuppressLint;
-import android.app.AlertDialog;
 import android.os.AsyncTask;
 import android.os.Bundle;
 
@@ -96,13 +94,13 @@ public class HomeApiObjects extends Fragment {
                              Bundle savedInstanceState) {
         viewF = inflater.inflate(R.layout.fragment_home_api_objects, container, false);
 
-        progressIndicatorApi = viewF.findViewById(R.id.loading_progress_api);
+        progressIndicatorApi = viewF.findViewById(R.id.loading_progress);
         progressIndicatorApi.show();
 
         // Inflate the layout for this fragment
         userEmailTextView = viewF.findViewById(R.id.userEmailTextView);
-        recyclerView = viewF.findViewById(R.id.recyclerViewApi);
-        searchView = viewF.findViewById(R.id.searchApi);
+        recyclerView = viewF.findViewById(R.id.recyclerView);
+        searchView = viewF.findViewById(R.id.search);
         searchView.clearFocus();
 
         String user = SingletonUser.getInstance().getUser().replace(".", ",");
@@ -111,15 +109,6 @@ public class HomeApiObjects extends Fragment {
         String username = user.replace(",", ".");
         extractedUsername = username.split("@")[0];
         userEmailTextView.setText(MessageFormat.format("Hey {0}, what you''d like to make today?", extractedUsername));
-
-//        adapterApi = new MyAdapterApi(getContext(), dataList, viewF, getParentFragmentManager());
-//        recyclerView.setAdapter(adapterApi);
-//
-//        GridLayoutManager gridLayoutManager = new GridLayoutManager(getContext(), 1);
-//        recyclerView.setLayoutManager(gridLayoutManager);
-//
-//        adapterApi = new MyAdapterApi(getContext(),dataList, viewF, getParentFragmentManager());
-//        recyclerView.setAdapter(adapterApi);
 
         OnBackPressedCallback callback = new OnBackPressedCallback(true /* enabled by default */) {
             @Override

@@ -215,8 +215,15 @@ public class FirebaseHandler {
     }
 
     public void getRecipesForUserAndCategory(String userId, String category, ValueEventListener valueEventListener) {
-        DatabaseReference userRef = databaseReference.child("Users").child(userId).child("Categories").child(category);
-        userRef.addValueEventListener(valueEventListener);
+        // Ensure user and category are not null or empty strings
+        if (userId != null && !userId.isEmpty() && category != null && !category.isEmpty()) {
+            DatabaseReference userRef = FirebaseDatabase.getInstance().getReference("Users").child(userId);
+            DatabaseReference categoryRef = userRef.child("Categories").child(category);
+
+            categoryRef.addValueEventListener(valueEventListener);
+        } else {
+            Log.d("Firebase","NO");
+           }
     }
 
     private void resetUploadRecipeFields(Activity activity) {

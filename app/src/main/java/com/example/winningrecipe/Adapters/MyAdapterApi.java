@@ -16,11 +16,7 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.bumptech.glide.Glide;
 import com.example.winningrecipe.Models.ApiObject;
-import com.example.winningrecipe.Models.DataClass;
 import com.example.winningrecipe.R;
-
-import org.json.JSONException;
-import org.json.JSONObject;
 
 import java.util.ArrayList;
 
@@ -94,11 +90,11 @@ class MyViewHolderApi extends RecyclerView.ViewHolder{
     public MyViewHolderApi(@NonNull View itemView) {
         super(itemView);
 
-        recipeImage = itemView.findViewById(R.id.recipe_api_image);
+        recipeImage = itemView.findViewById(R.id.recipe_image);
         recipeDescription = itemView.findViewById(R.id.recipe_api_brief_description);
         recipeCategory = itemView.findViewById(R.id.recipe_api_category);
-        recipeName = itemView.findViewById(R.id.recipe_api_name);
-        recipeCard = itemView.findViewById(R.id.recipe_api_card);
+        recipeName = itemView.findViewById(R.id.recipe_name);
+        recipeCard = itemView.findViewById(R.id.recipe_card);
     }
 }
 

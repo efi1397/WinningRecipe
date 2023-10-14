@@ -72,8 +72,6 @@ public class RecipeDetailsFragment extends Fragment {
         OnBackPressedCallback callback = new OnBackPressedCallback(true /* enabled by default */) {
             @Override
             public void handleOnBackPressed() {
-                // Handle the back button event
-                Log.d("result" , "yes");
                 Navigation.findNavController(viewF).navigate(R.id.action_recipeDetailsFragment_to_home);
             }
         };
