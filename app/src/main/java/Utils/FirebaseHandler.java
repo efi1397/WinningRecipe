@@ -118,7 +118,6 @@ public class FirebaseHandler {
                     @Override
                     public void onSuccess(UploadTask.TaskSnapshot taskSnapshot) {
                         // Image uploaded successfully
-                        Toast.makeText(activity, "Image uploaded successfully", Toast.LENGTH_SHORT).show();
                         Log.d("Image", "Finish uploading image");
 
                         // Get the HTTP URL of the uploaded image

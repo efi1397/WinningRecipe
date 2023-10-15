@@ -5,34 +5,36 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
 	xmlns:tools="http://schemas.android.com/tools"
-	android:background="@drawable/pagebkg_login_signup"
+	android:background="@drawable/add_recipe_image"
 	tools:context=".AddRecipe"
     android:name="androidx.navigation.fragment.NavHostFragment"
     app:navGraph="@navigation/nav">
 
 
     <LinearLayout
-        android:layout_width="250dp"
+        android:layout_width="400dp"
         android:layout_height="wrap_content"
-        android:layout_margin="80dp"
 		android:gravity="center"
         android:orientation="vertical">
 
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-			android:layout_marginTop="75dp"
-			android:gravity="center"
+		<TextView
+			android:layout_width="wrap_content"
+			android:layout_height="wrap_content"
+			android:layout_marginTop="10dp"
 			android:layout_marginRight="8dp"
-            android:textStyle="bold"
-            android:textSize="30sp"
-            android:textColor="@color/appColor"
-			android:text="Upload Recipe"/>
+			android:gravity="center"
+			android:text="Upload Recipe"
+			android:textColor="@color/appColor"
+			android:textSize="30sp"
+			android:textStyle="bold" />
+		<View
+			android:layout_width="wrap_content"
+			android:layout_height="16dp" />
 
 		<ImageView
 			android:id="@+id/upload_image"
-			android:layout_width="51dp"
-			android:layout_height="43dp"
+			android:layout_width="232dp"
+			android:layout_height="147dp"
 			android:layout_gravity="center"
 			android:layout_marginTop="7dp"
 			android:layout_marginRight="10dp"
@@ -41,6 +43,10 @@
 			android:focusable="true"
 			android:scaleType="fitCenter"
 			android:src="@drawable/add_image" />
+
+		<View
+			android:layout_width="wrap_content"
+			android:layout_height="16dp" />
 
 		<com.google.android.material.textfield.TextInputLayout
 			android:id="@+id/textInputLayoutName"
@@ -69,6 +75,10 @@
 
 		</com.google.android.material.textfield.TextInputLayout>
 
+		<View
+			android:layout_width="wrap_content"
+			android:layout_height="2dp" />
+
 		<com.google.android.material.textfield.TextInputLayout
 			android:id="@+id/textInputLayoutIngredients"
 			style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
@@ -96,6 +106,9 @@
 
 		</com.google.android.material.textfield.TextInputLayout>
 
+		<View
+			android:layout_width="wrap_content"
+			android:layout_height="2dp" />
 
 		<com.google.android.material.textfield.TextInputLayout
 			android:id="@+id/textInputLayoutCategory"
@@ -123,6 +136,10 @@
 				android:textColor="@color/appColor" />
 
 		</com.google.android.material.textfield.TextInputLayout>
+
+		<View
+			android:layout_width="wrap_content"
+			android:layout_height="2dp" />
 
         <com.google.android.material.textfield.TextInputLayout
 			android:id="@+id/textInputLayoutTime"
@@ -171,21 +188,31 @@
 			<com.google.android.material.textfield.TextInputEditText
 				android:id="@+id/upload_description"
 				android:layout_width="220dp"
-				android:layout_height="50dp"
+				android:layout_height="160dp"
+				android:fadeScrollbars="false"
+				android:gravity="start|top"
+				android:inputType="textMultiLine"
+				android:lines="5"
 				android:paddingStart="30dp"
+				android:scrollbars="vertical"
 				android:textColor="@color/appColor" />
+
 
 		</com.google.android.material.textfield.TextInputLayout>
 
-        <Button
-            android:id="@+id/addRecipeToFirebase"
-            android:layout_width="100dp"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="10dp"
+		<View
+			android:layout_width="wrap_content"
+			android:layout_height="1dp" />
+
+		<Button
+			android:id="@+id/addRecipeToFirebase"
+			android:layout_width="143dp"
+			android:layout_height="51dp"
+			android:layout_marginTop="10dp"
 			android:layout_marginRight="5dp"
 			android:layout_marginBottom="30dp"
-            android:text="ADD"
-            android:textSize="20dp"/>
+			android:text="ADD"
+			android:textSize="20dp" />
 
     </LinearLayout>
 
