@@ -12,7 +12,7 @@
         android:layout_width="match_parent"
         android:layout_height="2dp"
         android:layout_marginTop="85dp"
-        android:background="#BF150E0E" />
+        android:background="@color/appColor" />
 
     <RelativeLayout
         android:id="@+id/titleBar"
@@ -36,7 +36,7 @@
             android:layout_marginStart="100dp"
             android:layout_marginTop="15dp"
             android:text="Winning Recipe"
-            android:textColor="#BF150E0E"
+            android:textColor="@color/appColor"
             android:textSize="30sp"
             android:textStyle="bold"
             app:layout_constraintBottom_toBottomOf="parent"
@@ -84,7 +84,8 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:indeterminate="true"
-        android:layout_centerInParent="true"/>
+        android:layout_centerInParent="true"
+        app:indicatorColor="@color/appColor"/>
 
 </RelativeLayout>
 
