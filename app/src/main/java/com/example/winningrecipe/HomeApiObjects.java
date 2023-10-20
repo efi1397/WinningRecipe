@@ -108,7 +108,7 @@ public class HomeApiObjects extends Fragment {
         // Show the username without the email in home page
         String username = user.replace(",", ".");
         extractedUsername = username.split("@")[0];
-        userEmailTextView.setText(MessageFormat.format("Hey {0}, what you''d like to make today?", extractedUsername));
+        userEmailTextView.setText(MessageFormat.format("Hey {0}, what you'd like to make today?", extractedUsername));
 
         OnBackPressedCallback callback = new OnBackPressedCallback(true /* enabled by default */) {
             @Override

@@ -122,8 +122,7 @@ public class FirebaseHandler {
 
                         // Get the HTTP URL of the uploaded image
                         imageRef.getDownloadUrl().addOnSuccessListener(new OnSuccessListener<Uri>() {
-                            @Override
-                            public void onSuccess(Uri downloadUri) {
+                            @Override                            public void onSuccess(Uri downloadUri) {
                                 if (downloadUri != null) {
                                     // Set the HTTP URL in the Recipe object
                                     Log.d("Image", "Finish uploading image");

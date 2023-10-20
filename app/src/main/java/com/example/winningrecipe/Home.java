@@ -96,7 +96,7 @@ public class Home extends Fragment {
         // Show the username without the email in home page
         String username = user.replace(",", ".");
         String extractedUsername = username.split("@")[0];
-        userEmailTextView.setText(MessageFormat.format("Hey {0}, what you''d like to make today?", extractedUsername));
+        userEmailTextView.setText(MessageFormat.format("Hey {0}, what you'd like to make today?", extractedUsername));
 
         // Find and set up category TextViews and RecyclerViews
         for (int i = 0; i < CATEGORIES.length; i++) {
