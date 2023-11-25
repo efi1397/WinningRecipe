@@ -1,5 +1,7 @@
 # WinningRecipe
 
+![image](https://github.com/efi1397/WinningRecipe/assets/87939993/2e8074bf-45dd-450c-abae-29eb04063711)
+
 WinningRecipe is a versatile culinary application that offers a delightful experience for food enthusiasts and home chefs. 
 With WinningRecipe, users can effortlessly create and save their favorite recipes, making it convenient to access their go-to dishes whenever they please. 
 The application allows users to categorize their recipes, making it simple to find recipes for different occasions, cuisines, or dietary preferences. 
