@@ -11,7 +11,7 @@ With the ability to save recipes as favorites, users can build a personalized re
 In summary, WinningRecipe is the perfect companion for anyone who is passionate about cooking, offering a wide range of features to enhance their culinary journey.
 
 ## Demo
-[Demo](https://clipchamp.com/watch/7NRZZL0rDwx)
+[WinningRecipe app demo!](https://clipchamp.com/watch/7NRZZL0rDwx)
 
 ## Team
 
