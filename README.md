@@ -10,6 +10,9 @@ Whether you're looking for inspiration, exploring new flavors, or seeking specif
 With the ability to save recipes as favorites, users can build a personalized recipe collection that reflects their unique tastes and cooking style. 
 In summary, WinningRecipe is the perfect companion for anyone who is passionate about cooking, offering a wide range of features to enhance their culinary journey.
 
+## Demo
+[Demo](https://clipchamp.com/watch/7NRZZL0rDwx)
+
 ## Team
 
 - **Efi Tzaig** - [GitHub](https://github.com/efi1397)
